@@ -84,10 +84,11 @@ function cambio() {
 		resultado= eu*166.386;
 		document.getElementById("pesetas").value = resultado + " pta";
 	}
-	if(pesetas.length != 0){
+	/*if(pesetas.length != 0){
 		resultado= pesetas/166.386;
 		document.getElementById("euros").value = resultado + " &euro";
 	}
+	*/
 	//document.getElementById("demo").innerHTML = pesetas;
 }
 
