@@ -1,0 +1,46 @@
+@charset "ISO-8859-1";
+/*
+Un diseño líquido centrado con un ancho del 80%.
+El encabezado de nivel 1 centrado.
+El contenido principal de la página se organiza 
+en dos columnas, una de 25% de ancho y la otra el espacio restante de 75%.
+La lista que explica el contenido del libro se muestra como un texto a tres
+ columnas del mismo ancho.
+*/
+body {
+	width: 80%;
+	margin:0px auto;
+}
+
+h1{
+	text-align: center;
+}
+
+aside{
+	width:25%;
+	float: left;
+}
+#caja1{
+	width:75%;
+	float: right;
+}
+#caja2{
+	width:75%;
+	float: right;
+}
+#parte1{
+	width:200px;
+	float:left;
+	padding: 0px 5px 0px 0px;
+}
+#parte2{
+	width:200px;
+	float:left;
+	padding: 0px 5px 0px 0px;
+}
+#parte3{
+	width:200px;
+	float:left;
+	padding: 0px 0px 0px 5px;
+}
+

@@ -1,0 +1,51 @@
+@charset "ISO-8859-1";
+/*
+Las características del diseño de esta página son:
+
+Un diseño fijo centrado con un ancho de 960 px.
+*/
+
+body {
+	width: 960px;
+	margin:0px auto;
+}
+/*
+El encabezado de nivel 1 centrado.
+*/
+h1{
+	text-align: center;
+}
+/*
+El contenido principal de la página se organiza en dos 
+columnas, una de 260 px de ancho y la otra el espacio 
+restante de 700 px.
+*/
+
+aside{
+	width:260px;
+	float: left;
+}
+#caja1{
+	width:700px;
+	float: right;
+}
+#caja2{
+	width:700px;
+	float: right;
+}
+#parte1{
+	width:200px;
+	float:left;
+	padding: 0px 5px 0px 0px;
+}
+#parte2{
+	width:200px;
+	float:left;
+	padding: 0px 5px 0px 0px;
+}
+#parte3{
+	width:200px;
+	float:left;
+	padding: 0px 0px 0px 5px;
+}
+

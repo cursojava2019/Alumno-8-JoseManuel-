@@ -1,0 +1,53 @@
+@charset "ISO-8859-1";
+/*
+Los bordes que debes definir son:
+
+Encabezado nivel 1: borde completo con una anchura de 2px, 
+sólido y de color azul (#00F).
+
+*/
+h1{
+	border:  2px solid #00F;
+	margin: 30px 0px 30px 10px;
+	padding: 10px;
+}
+/*
+Encabezado nivel 2: borde completo con una anchura de 2px, sólido
+ y de color gris (#AAA).
+*/
+
+h2{
+	border:  2px solid #AAA;
+	margin: 15px 0px 15px 10px;
+	padding: 5px;
+}
+/*
+Listas: borde completo con una anchura de 2px, solido y de color verde (#0F0).
+*/
+
+ul{
+	border:  2px solid #0F0;
+	margin: 15px 0px 0px 10px;
+}
+li{
+	margin: 0px 0px 15px 0px;
+}
+li:last-child {
+  margin: 0px 0px 0px 0px;
+}
+p{
+	margin: 0px 0px 0px 10px;
+}
+/*
+
+En la siguiente imagen se indican las dimensiones que deben tener 
+ciertas partes de la página:
+A: relleno izquierdo y derecho de 10px.
+B: relleno de 10 px.
+C: margen superior e inferior de 30px.
+D: relleno de 5 px.
+E: margen superior e inferior de 15px.
+F: margen entre los elementos de la lista de 15 px.
+Puedes modificar el código HTML proporcionado para añadir los
+ identificadores y clases que necesites.
+*/

@@ -1,0 +1,49 @@
+@charset "ISO-8859-1";
+/*
+Las características del diseño de esta página son:
+
+Un diseño elástico centrado con un ancho de 60 em.
+El encabezado de nivel 1 centrado.
+El contenido principal de la página se organiza en
+ dos columnas, una de 16 em de ancho y la otra el espacio
+  restante de 44 em.
+La lista que explica el contenido del libro se muestra 
+como un texto a tres columnas del mismo ancho.
+*/
+body {
+	width: 60em;
+	margin:0px auto;
+}
+
+h1{
+	text-align: center;
+}
+
+aside{
+	width:16em;
+	float: left;
+}
+#caja1{
+	width:44em;
+	float: right;
+}
+#caja2{
+	width:700px;
+	float: right;
+}
+#parte1{
+	width:200px;
+	float:left;
+	padding: 0px 5px 0px 0px;
+}
+#parte2{
+	width:200px;
+	float:left;
+	padding: 0px 5px 0px 0px;
+}
+#parte3{
+	width:200px;
+	float:left;
+	padding: 0px 0px 0px 5px;
+}
+
