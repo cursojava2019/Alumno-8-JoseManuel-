@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Ejercicio 01 Javascript</title>
+<style type="text/css">
+footer{
+	clear: both;
+}
+#cuadrado1,#cuadrado2,#cuadrado3,#cuadrado4{
+	width: 100px;
+	height: 100px;
+	border: gray solid 1px;
+	margin: 5px 5px 5px 5px;
+	display: inline-block;
+}
+#cuadrado1{
+	background-color: red;
+}
+#cuadrado2{
+	background-color: pink;
+}	
+#cuadrado3{
+	background-color: blue;
+}	
+#cuadrado4{
+	background-color: yellow;
+}		
+img{
+	height: 200px;
+	width: 200px;
+}
+</style>
+</head>
+<body  id="main">
+<section>
+	<br>
+	<br>
+	<button id="botonSaludar">Saludar</button>
+	<br>
+	<br>
+	<form>
+		  <fieldset>
+		    <legend>Ejer 03 Numeros primos:</legend>
+		    <div id="numPrimos"></div>
+		  </fieldset>
+	</form>
+	<br>
+	<br>
+	<div id="cuadrado1">Cuadradro1</div>
+	<div id="cuadrado2">Cuadradro2</div>
+	<div id="cuadrado3">Cuadradro3</div>
+	<div id="cuadrado4">Cuadradro4</div>
+	<br>
+	<br>
+	 <form>
+		  <fieldset>
+		    <legend>Cambio:</legend>
+		    Euros: <input type="text" id="euros" name="euros"><br>
+		    <br>
+		    Pesetas: <input type="text" id="pesetas" name="euros"><br>
+		    <br>
+		    <input type="button" id="cambiar" value="cambiar" >
+		    <input type="button" id="borrar" value="borrar" >
+		  </fieldset>
+	</form>
+	<br>
+	<br>
+	 <form>
+		  <fieldset>
+		    <legend>Formulario Ejercicio 06:</legend>
+		    <label>Nombre: </label><input type="text"><br>
+		    <br>
+		    <label>Contraseña: </label><input type="password" id="pass" name="pass"><br>
+		    <br>
+		    <label id="mensajeForm"></label>
+		    <br>
+		    <br>
+		    <input type="button" id="enviar" value="enviar" >
+		  </fieldset>
+	</form>
+	<br>
+	<br>
+	<form>
+		  <fieldset>
+		    <legend>Formulario Ejercicio 07:</legend>
+		    <label>Nombre: </label><input type="text" id="nombre" name="nombre"><br>
+		    <br>
+		    <input type="button" id="saludoYHora" value="pulsa aqui">
+		    <br>
+		    <br>
+		    <label id="hora"></label>
+	
+		  </fieldset>
+	</form>
+	<form>
+		  <fieldset>
+		    <legend>Formulario Ejercicio 08:</legend>
+		    <label>Escriba una palabra: </label><input type="text" id="palabra" name="palabra"><br>
+		    <br>
+		    <input type="button" id="botonPalabra" value="pulsa aqui">
+		    <br>
+		    <br>
+		    <label id="menPalabra"></label>
+	
+		  </fieldset>
+	</form>
+	<br>
+	<br>
+	<form>
+		  <fieldset>
+		    <legend>Formulario Ejercicio 10:</legend>
+		    <label>Fecha y hora: </label><br>
+		    <br>
+		    <label id="fecha"></label><label id="fechaHora"></label>
+		    <br>
+		  </fieldset>
+	</form>
+	<br>
+	<br>
+	<form>
+		  <fieldset>
+		    <legend>Formulario Ejercicio 11:</legend>
+		    <label>Introduzca un numero del 1 al 100: </label><br>
+		    <br>
+		    <input id="num" type="text">
+		    <br>
+		    <label id="menNum"></label>
+		    <br>
+		    <br>
+		    <input type="button" id="botonNum" value="Comprobar">
+		  </fieldset>
+	</form>
+	<p id="demo"></p>  
+	<form>
+		  <fieldset>
+		    <legend>Formulario Ejercicio 12:</legend>
+		    <label>¿Cual es la capita de españa?</label><br><br>
+		    <input type="radio" name="ciudad" value="barcelona"> Barcelona<br>
+  			<input type="radio" name="ciudad" value="valencia"> Valencia<br>
+  			<input type="radio" name="ciudad" value="Madrid"> Madrid
+		    <br>
+		   
+		    <label id="respuesta"></label><br> <br>
+		    <input type="button" id="botonRespuesta" value="Comprobar">
+		  </fieldset>
+	</form>
+	<form>
+		  <fieldset>
+		    <legend>Formulario Ejercicio 13:</legend>
+		    <table>
+		    	  <tr>
+		    	  	<th><input type="button" id="multiplicar" value="x" onclick="operar(1)"></th>
+				    <th><input type="button" id="n1" value="1" onclick="darNumero('1')"></th>
+				    <th><input type="button" id="n2" value="2" onclick="darNumero('2')"></th>
+				    <th><input type="button" id="n3" value="3" onclick="darNumero('3')"></th>
+				  </tr>
+				  <tr>
+				  	<th><input type="button" id="dividir" value="/" onclick="operar(2)"></th>
+				    <th><input type="button" id="n4" value="4" onclick="darNumero('4')"></th>
+				    <th><input type="button" id="n5" value="5" onclick="darNumero('5')"></th>
+				    <th><input type="button" id="n6" value="6" onclick="darNumero('6')"></th>
+				  </tr>
+				  <tr>
+				  	<th><input type="button" id="sumar" value="+" onclick="operar(3)"></th>
+				    <th><input type="button" id="n4" value="7" onclick="darNumero('7')"></th>
+				    <th><input type="button" id="n5" value="8" onclick="darNumero('8')"></th>
+				    <th><input type="button" id="n6" value="9" onclick="darNumero('9')"></th>
+				  </tr>
+				  <tr>
+				  	<th><input type="button" id="restar" value="-" onclick="operar(4)"></th>
+				  	<th><input type="button" id="=" value="="  onclick="esIgual()"></th>
+				    <th><input type="button" id="n0" value="0" onclick="darNumero('0')"></th>
+				  	<th><input type="button" id="c" value="C" onclick="darC()"></th>
+				  </tr>
+		    </table>
+		    <input type="text" id="valor_numero" size="15" readonly="readonly">
+		  </fieldset>
+	</form>
+	<br>
+	<br>
+	<img id="caraSon1" src="img/cara sonriente1.jpg" >
+	<img id="caraSon2" src="img/cara sonriente2.jpg">
+	<img id="caraSon3" src="img/cara sonriente3.jpg">
+	<br>
+	<br>
+	<form id="formulario" action="validacion.html">
+		<fieldset>
+			<legend>Formulario Ejer 15:</legend><br><br>
+			<div id="nomGrupo">
+				<label>Nombre: </label>
+				<input type="text" id="nom" onblur="pierdeBlur();" onfocus="ganaFoco();">
+				<p id="mensajeNom"></p>
+			</div><br>
+			<div id="emailGrupo">
+				<label>Email: </label>
+				<input type="text" id="email" onblur="pierdeBlur();" onfocus="ganaFoco();">
+				<p id="mensajeEmail"></p>
+			</div><br><br>
+			<div id="contrasenaGrupo">
+				<label>Password: </label>
+				<input type="password" id="contrasena" onblur="pierdeBlur();" onfocus="ganaFoco();">
+				<p id="mensajePass"></p>
+			</div><br><br>
+			<div id="ComentarioGrupo">
+				<label>Comentario: </label>
+				<br><br>
+				<textarea id="comentario" rows="4" cols="50" onblur="pierdeBlur();" onfocus="ganaFoco();"></textarea>
+				<p id="mensajeComentario"></p>
+			</div><br><br>
+			<input type="button" id="enviarForm" value="Enviar">
+		</fieldset>
+	</form>
+	<br><br>
+	<footer>
+		<form action="barraEstadp">
+			<label for="x">X: </label><input type="text" id="x">
+			<label for="y">Y: </label><input type="text" id="y">
+		</form>
+	</footer>
+</section>
+<script type="text/javascript" src="js/EjerciciosJavascript.js"></script>
+<script type="text/javascript" src="js/Ejercicio03Javascript.js"></script>
+</body>
+</html>
