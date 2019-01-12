@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Ejercicio 03: Formulario</title>
+</head>
+<body>
+<header><h1>Formulario de Registro</h1></header>
+<section>
+<form action="index.html">
+	<label>Nombre: </label>
+	<input type="text">
+	<br />
+	<br />
+	<label>Apellidos: </label>
+	<input type="text">
+	<br />
+	<br />
+	<label>Sexo:</label>
+	<input type="radio" name="genero" value="hombre" checked><label>Hombre</label>
+    <input type="radio" name="genero" value="mujer"><label>Mujer</label>
+    <br />
+	<br />
+    <label>Contraseña: </label>
+	<input type="password">
+    <br />
+	<br />
+	<label for="poblacion">Poblacion:</label>
+	<select id="poblacion" name="poblacion">
+  		<option value="almeria">Almeria</option>
+  		<option value="sevilla">Sevilla</option>
+  		<option value="madrid">Madrid</option>
+	</select>
+	<br />
+	<br />
+    <label>Descripcion:</label>
+    <textarea></textarea>
+    <br />
+	<br />
+	<input type="checkbox" name="recibir" value="recibir"><label>Deseo reicibir informacion</label><br>
+    <input type="checkbox" name="aceptar" value="aceptar"><label>Acepto las condiciones</label><br>
+    <br />
+	<br />
+    <input type="submit" value="Submit">
+</form>
+</section>
+<br/>
+<footer>
+	<a href="./Index.html">Volver</a>
+</footer>
+</body>
+</html>
