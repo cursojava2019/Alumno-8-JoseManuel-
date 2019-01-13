@@ -1,0 +1,151 @@
+@charset "ISO-8859-1";
+/* #7ef712 <-verde */
+/* #f71223 <- rojo */
+/* #e3d60d <-amarillo */
+/* #0de3af <-azul celeste */
+/* #f8b091<-color carne */
+ 
+	body{
+		padding: 0px;
+		margin: 0px;
+	}
+	
+	div{
+		padding: 0px;
+		margin: 0px;
+		border: black solid 1px;
+		
+	}
+	
+	.container{
+		border: none;
+	}
+	.row{
+		padding: 0px;
+		margin: 3px;
+		border: none;
+
+	}
+	.cabecera{
+		text-align: left;
+		background-color: #7ef712;
+		font-weight: bold;
+	}
+	.cuerpo1{
+		
+		margin: 0px;
+		padding:0px;
+		background-color: #f71223;
+		text-align: center;
+		font-size: 120px;
+		font-weight: bold;
+	}
+
+	.cuerpo2{
+		margin: 0px;
+		padding:0px;
+		background-color: #f71223;
+		text-align: center;
+		font-size: 120px;
+		font-weight: bold;
+	}
+	.cuerpo3{
+		
+		margin: 0px;
+		padding:0px;
+		background-color: #f71223;
+		text-align: center;
+		font-size: 120px;
+		font-weight: bold;
+	}
+	.pie1{
+		margin-right: 0px;
+		background-color: #e3d60d;
+		text-align: right;
+		font-weight: bold;
+	}
+	.pie2{
+ 		flex:1; 
+		margin-left: 2px;
+		background-color: #e3d60d;
+		text-align: left;
+		font-weight: bold;
+	}
+	
+	@media (max-width: 800px)and (min-width: 500px){
+		.cabecera{
+			text-align: left;
+			background-color: #0de3af;
+			font-weight: bold;
+		}
+		.cuerpo1{
+			margin: 0px;
+			padding:0px;
+			background-color: #f71223;
+			text-align: left;
+			font-size: 120px;
+			font-weight: bold;
+		}
+		.cuerpo2{
+			margin: 0px;
+			padding:0px;
+			background-color: #f71223;
+			text-align: right;
+			font-size: 120px;
+			font-weight: bold;
+		}
+		.cuerpo3{
+			margin: 0px;
+			padding:0px;
+			background-color: #7ef712;
+			text-align: center;
+			font-size: 120px;
+			font-weight: bold;
+		}
+			.pie1{
+			margin:0px ;
+			background-color: #e3d60d;
+			text-align:center;
+			font-weight: bold;
+		}
+		.pie2{
+			margin-top: 2px;
+			background-color: #e3d60d;
+			text-align: center;
+			font-weight: bold;
+		}
+	
+}
+	@media (max-width: 500px){
+		.cabecera{
+			text-align: center;
+			background-color: #f8b091;
+			font-weight: bold;
+		}
+		.cuerpo1{
+			margin: 0px;
+			padding:0px;
+			background-color: #f71223;
+			text-align: left;
+			font-size: 120px;
+			font-weight: bold;
+		}
+		.cuerpo2{
+			margin: 0px;
+			padding:0px;
+			background-color: #0de3af;
+			text-align: center;
+			font-size: 120px;
+			font-weight: bold;
+		}
+		.cuerpo3{
+			margin: 0px;
+			padding:0px;
+			background-color: #f71223;
+			text-align: right;
+			font-size: 120px;
+			font-weight: bold;
+		}
+		
+	
+}

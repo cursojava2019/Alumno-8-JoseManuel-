@@ -1,0 +1,26 @@
+@charset "ISO-8859-1";
+body{
+		padding: 0px;
+		margin: 0px;
+	}
+	.container{
+		border: none;
+	}
+	.row{
+		padding: 0px;
+		margin: 0px;
+		border: none;
+	}
+	
+	div{
+		min-height: 100px;
+		padding: 0px;
+		margin: 0px;
+	}
+
+	.cuadrados{ 
+		background-color:  #9eaee9;
+		border: gray solid 1px;
+		height: 100px;
+
+		}

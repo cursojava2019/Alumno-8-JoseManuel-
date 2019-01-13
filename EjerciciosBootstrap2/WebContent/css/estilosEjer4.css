@@ -1,0 +1,29 @@
+@charset "ISO-8859-1";
+
+ 
+	body{
+		padding: 0px;
+		margin: 0px;
+	}
+	
+	div{
+		padding: 0px;
+		margin: 0px;
+	
+	}
+	label{
+		float:right;
+		margin: 50px;
+	}
+	h1{
+		font-weight: bold;
+	}
+	
+	
+	.row{
+		padding: 0px;
+		margin: 0px;
+	}
+	#enviar{
+	float: right;
+	}
