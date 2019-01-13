@@ -23,10 +23,13 @@ public class Ejercicio4 {
 		boolean positivo=false;
 		System.out.println("Introduzca un numero positivo: ");
 		num=entrada.nextInt();
+		entrada.nextLine();
 		do {
 			if(num>0) {
+				System.out.println("El numero es positivo ");
 				positivo=true;
 			}else {
+				System.out.println("El numero no es positivo");
 				System.out.println("Introduzca un numero positivo: ");
 				num=entrada.nextInt();
 			}
