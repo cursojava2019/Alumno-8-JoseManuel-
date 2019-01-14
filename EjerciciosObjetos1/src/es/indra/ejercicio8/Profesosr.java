@@ -4,52 +4,59 @@ import java.util.Scanner;
 
 public class Profesosr extends Persona {
 
-	protected String materia;
+	protected String materia,profesion="Profesor";
 	Scanner entrada = new Scanner(System.in);
-	public Profesosr(String nombre, char sexo, Integer edad, String materia) {
-		super(nombre, sexo);
-		this.edad= edad(edad);
-		this.materia = materia(materia);
+	public Profesosr() {
+		super();
+		this.edad= edad();
+		this.materia = materia();
 	}
 
 	public String getMateria() {
 		return materia;
 	}
 
-	public void setMateria(String materia) {
-		this.materia = materia;
+	public void setMateria() {
+		this.materia = materia();
 	}
-	public void setEdad(Integer edad) {
-		this.edad = edad(edad);
+	public void setEdad() {
+		this.edad = edad();
 	}
-	public String materia(String materia) {
+	public Integer edad() {
+		Integer edad = new Integer(0);
 		boolean correcto=false;
-		
+		System.out.println("Introduce la edad: ");
 		do {
-			materia=materia.toLowerCase();
-			if(materia == "matematicas" || materia == "filosofia" || materia == "fisica") {
+			edad= entrada.nextInt();
+			entrada.nextLine();
+			if(edad>=18 && edad<=70) {
 				correcto=true;
 			}else {
-				System.out.println("Introduzca la materia (Debe ser: matematicas,filosofia o fisica) ");
-				materia= entrada.nextLine();
-			}	
-				
-		}while(correcto != false);
-		return materia;
-	}
-	public Integer edad(Integer edad) {
-		boolean correcto=false;
-		do {
-			if(edad>=18 || edad<=70) {
-				correcto=true;
-			}else {
-				System.out.println("La edad no es correcta ");
-				edad= entrada.nextInt();
+				System.out.println("La edad no es correcta.Introducela de nuevo: ");
+
 			}
-		}while(correcto !=false);
+		}while(correcto == false);
 	
 		return edad;
 	}
+	public String materia() {
+		String materia="";
+		boolean correcto=false;
+		
+		System.out.println("Introduzca la materia: ");
+		do {
+			materia= entrada.nextLine();
+			materia=materia.toLowerCase();
+			if(materia.equals("matematicas") || materia.equals("filosofia") || materia.equals("fisica")) {
+				correcto=true;
+			}else {
+				System.out.println("Introduzca la materia (Debe ser: matematicas,filosofia o fisica) ");
+			}	
+				
+		}while(correcto == false);
+		return materia;
+	}
+	
 	@Override
 	public boolean ausente() {
 		boolean ausente=false;
@@ -64,7 +71,7 @@ public class Profesosr extends Persona {
 	@Override
 	public String toString() {
 
-		return super.toString() + " materia: " + this.materia;
+		return super.toString() +" edad: "+this.edad+ " materia: " + this.materia+" Profesion: "+this.profesion+" Ausente: "+ausente();
 	}
 
 }
