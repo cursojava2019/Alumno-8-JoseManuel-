@@ -2,10 +2,10 @@ package es.indra.ejercicio8;
 
 public class Ejercicio8Main {
 
-	public int totalAlumnos(boolean ausente) {
-		int totalAlumnos = 0;
-		if (ausente == false)
+	public static int totalAlumnos(boolean ausente, int totalAlumnos) {
+		if (ausente == false) {
 			totalAlumnos++;
+		}
 		return totalAlumnos;
 	}
 
@@ -23,8 +23,19 @@ public class Ejercicio8Main {
 		}
 
 		for (int i = 0; i < estudiantes.length; i++) {
-			totalAlumnos = totalAlumnos(estudiantes[i].ausente());
+			boolean aus = estudiantes[i].getAusente();
+			totalAlumnos = totalAlumnos(aus, totalAlumnos);
 		}
+		Aula aula1 = new Aula(new Integer(1), new Integer(5), "fisica");
+		if (aula1.disponible(p1.getAusente(), p1.getMateria(), totalAlumnos)) {
+			for (int i = 0; i < estudiantes.length; i++) {
+				if (estudiantes[i].getCalificacion() >= 5) {
+					System.out.println("El alumno: " + estudiantes[i].getNombre() + " esta aprobado con un "
+							+ estudiantes[i].getCalificacion());
+				}
+			}
+		}
+		;
 	}
 
 }

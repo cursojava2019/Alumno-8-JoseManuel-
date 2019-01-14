@@ -1,20 +1,19 @@
 package es.indra.ejercicio8;
 
-import java.net.PortUnreachableException;
-
 public class Aula {
-	protected Integer idAula,numMax;
+	protected Integer idAula, numMax;
 	protected String materia;
 	protected boolean disponible;
+
 	public Aula(Integer idAula, Integer numMax, String materia) {
 		super();
 		this.idAula = idAula;
 		this.numMax = numMax;
 		this.materia = materia;
-		this.disponible=false;
-		
+		this.disponible = false;
+
 	}
-	
+
 	public Integer getIdAula() {
 		return idAula;
 	}
@@ -43,23 +42,30 @@ public class Aula {
 		return disponible;
 	}
 
-	public void setDisponible(boolean profesorDisponible,String materia,Integer contAlumnos) {
-		this.disponible = disponible(profesorDisponible,materia,contAlumnos);
+	public void setDisponible(boolean profesorDisponible, String materia, Integer contAlumnos) {
+		this.disponible = disponible(profesorDisponible, materia, contAlumnos);
 	}
 
-	public boolean disponible(boolean profesorDisponible,String materia,Integer contAlumnos) {
-		boolean disponible=false;
-		Integer porceAlumnos = new Integer(0);
-		porceAlumnos = (int)(this.numMax*contAlumnos)/100;
-		if(profesorDisponible==true && materia.contentEquals(this.materia) && porceAlumnos>=50) {
-			disponible=true;
-		}else {
+	public boolean disponible(boolean profesorAusente, String materia, int contAlumnos) {
+		boolean disponible = false;
+		float porceAlumnos = 0;
+		porceAlumnos = (float) Math.floor(((contAlumnos * 1.0) / this.numMax) * 100);
+		if (profesorAusente == false && materia.contentEquals(this.materia) && porceAlumnos >= 50) {
+			disponible = true;
+			System.out.println("El aula esta disponible.");
+		} else if (!materia.contentEquals(this.materia)) {
 			System.out.println("El aula no esta disponible. Pueden ser las siguientes razones:");
-			System.out.println("El profesor no puede dar clase en un aula designada para "+this.materia);
-			System.out.println("El profesor no esta disponible. Disponibilidad del profesaor: "+profesorDisponible);
-			System.out.println("La cantidad de alumnos es inferior al 50%. Porcentaje de alumnos:"+porceAlumnos);
+			System.out.println(
+					"El profesor de " + materia + "no puede dar clase en un aula designada para " + this.materia);
+		} else if (profesorAusente == true) {
+			System.out.println("El profesor no esta disponible. Ausente: " + profesorAusente);
+		} else if (porceAlumnos < 50) {
+			System.out
+					.println("La cantidad de alumnos es inferior al 50%. Porcentaje de alumnos:" + porceAlumnos + " %");
+
 		}
+
 		return disponible;
 	}
-	
+
 }

@@ -4,12 +4,16 @@ import java.util.Scanner;
 
 public class Profesosr extends Persona {
 
-	protected String materia,profesion="Profesor";
+	protected String materia, profesion = "Profesor";
+	protected boolean ausente;
 	Scanner entrada = new Scanner(System.in);
+
 	public Profesosr() {
 		super();
-		this.edad= edad();
+		this.edad = edad();
 		this.materia = materia();
+		this.ausente = ausente();
+
 	}
 
 	public String getMateria() {
@@ -19,59 +23,71 @@ public class Profesosr extends Persona {
 	public void setMateria() {
 		this.materia = materia();
 	}
+
+	public boolean getAusente() {
+		return ausente;
+	}
+
+	public void setAusente() {
+		this.ausente = ausente();
+	}
+
 	public void setEdad() {
 		this.edad = edad();
 	}
+
 	public Integer edad() {
 		Integer edad = new Integer(0);
-		boolean correcto=false;
+		boolean correcto = false;
 		System.out.println("Introduce la edad: ");
 		do {
-			edad= entrada.nextInt();
+			edad = entrada.nextInt();
 			entrada.nextLine();
-			if(edad>=18 && edad<=70) {
-				correcto=true;
-			}else {
+			if (edad >= 18 && edad <= 70) {
+				correcto = true;
+			} else {
 				System.out.println("La edad no es correcta.Introducela de nuevo: ");
 
 			}
-		}while(correcto == false);
-	
+		} while (correcto == false);
+
 		return edad;
 	}
+
 	public String materia() {
-		String materia="";
-		boolean correcto=false;
-		
+		String materia = "";
+		boolean correcto = false;
+
 		System.out.println("Introduzca la materia: ");
 		do {
-			materia= entrada.nextLine();
-			materia=materia.toLowerCase();
-			if(materia.equals("matematicas") || materia.equals("filosofia") || materia.equals("fisica")) {
-				correcto=true;
-			}else {
+			materia = entrada.nextLine();
+			materia = materia.toLowerCase();
+			if (materia.equals("matematicas") || materia.equals("filosofia") || materia.equals("fisica")) {
+				correcto = true;
+			} else {
 				System.out.println("Introduzca la materia (Debe ser: matematicas,filosofia o fisica) ");
-			}	
-				
-		}while(correcto == false);
+			}
+
+		} while (correcto == false);
 		return materia;
 	}
-	
+
 	@Override
 	public boolean ausente() {
-		boolean ausente=false;
-		int num=0;
-		num=(int) Math.ceil(Math.random()*10);
-		if(num==1 || num==2) {
-			ausente=true;
-		}	
+		boolean ausente = false;
+		int num = 0;
+		num = (int) Math.ceil(Math.random() * 10);
+		if (num == 1 || num == 2) {
+			ausente = true;
+		}
 		return ausente;
 	}
 
 	@Override
 	public String toString() {
 
-		return super.toString() +" edad: "+this.edad+ " materia: " + this.materia+" Profesion: "+this.profesion+" Ausente: "+ausente();
+		return super.toString() + " edad: " + this.edad + " materia: " + this.materia + " Profesion: " + this.profesion
+				+ " Ausente: " + getAusente();
 	}
 
 }
