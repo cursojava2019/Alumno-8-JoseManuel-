@@ -1,11 +1,12 @@
 package es.indra.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.TreeMap;
 
-public class Concesionario {
+public class Concesionario implements Serializable {
 
 	private TreeMap<String, Comprador> compradores;
 	private TreeMap<Long, Vehiculo> vehiculos;
@@ -25,10 +26,6 @@ public class Concesionario {
 		this.ventas = ventas;
 	}
 
-	public TreeMap<String, Comprador> getCompradores() {
-		return compradores;
-	}
-
 	public void setCompradores(TreeMap<String, Comprador> compradores) {
 		this.compradores = compradores;
 	}
@@ -41,10 +38,6 @@ public class Concesionario {
 		this.vehiculos = vehiculos;
 	}
 
-	public ArrayList<Venta> getVentas() {
-		return ventas;
-	}
-
 	public void setVentas(ArrayList<Venta> ventas) {
 		this.ventas = ventas;
 	}
@@ -54,9 +47,17 @@ public class Concesionario {
 		return true;
 	}
 
+	public Comprador obtenerComprador(String dni) {
+		return this.compradores.get(dni);
+	}
+
 	public Boolean aniadirVehiculo(Vehiculo v) {
 		this.vehiculos.put(v.getCodigo(), v);
 		return true;
+	}
+
+	public Vehiculo obtenerVehiculo(Long codigo) {
+		return this.vehiculos.get(codigo);
 	}
 
 	public List<Vehiculo> vehiculosDisponibles() {
@@ -95,6 +96,11 @@ public class Concesionario {
 		} else {
 			return null;
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Concesionario [compradores=" + compradores + ", vehiculos=" + vehiculos + ", ventas=" + ventas + "]";
 	}
 
 }

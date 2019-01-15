@@ -1,6 +1,8 @@
 package es.indra.model;
 
-public class Venta {
+import java.io.Serializable;
+
+public class Venta implements Serializable {
 
 	private Vehiculo vehiculo;
 	private Comprador comprador;
@@ -39,6 +41,11 @@ public class Venta {
 
 	public void setPrecioVenta(Double precioVenta) {
 		this.precioVenta = precioVenta;
+	}
+
+	@Override
+	public String toString() {
+		return "Venta [vehiculo=" + vehiculo + ", comprador=" + comprador + ", precioVenta=" + precioVenta + "]";
 	}
 
 }
