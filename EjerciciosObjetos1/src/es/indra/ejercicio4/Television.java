@@ -11,16 +11,15 @@ public class Television extends Electrodomestico {
 		this.resolucion = RESOLUCION_DEFECTO;
 		this.sintonizador = SINTONIZADOR_DEFECTO;
 	}
-
-	public Television(Float precioBase, Float peso, Boolean sintonizador, int resolucion) {
+	public Television(Float precioBase, Float peso) {
 		super(precioBase, peso);
+		this.resolucion = RESOLUCION_DEFECTO;
+		this.sintonizador =SINTONIZADOR_DEFECTO;
+	}
+	public Television(Float precioBase, String color, Character clasificacion, Float peso,int resolucion,boolean sintonizador) {
+		super(precioBase, color, clasificacion, peso);
 		this.resolucion = resolucion;
 		this.sintonizador = sintonizador;
-	}
-
-	public Television(Float precioBase, String color, Character clasificacion, Float peso) {
-		super(precioBase, color, clasificacion, peso);
-		// TODO Auto-generated constructor stub
 	}
 
 	public Integer getResolucion() {

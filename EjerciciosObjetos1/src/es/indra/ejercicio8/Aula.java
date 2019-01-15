@@ -41,7 +41,6 @@ public class Aula {
 	public boolean getDisponible() {
 		return disponible;
 	}
-
 	public void setDisponible(boolean profesorDisponible, String materia, Integer contAlumnos) {
 		this.disponible = disponible(profesorDisponible, materia, contAlumnos);
 	}
