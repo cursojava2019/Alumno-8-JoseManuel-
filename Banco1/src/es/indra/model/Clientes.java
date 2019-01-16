@@ -1,8 +1,12 @@
 package es.indra.model;
+import java.io.Serializable;
+import java.util.ArrayList;
 
-public class Clientes {
+
+public class Clientes implements Serializable {
 	private String dni, nombre, apellidos, direccion, tlf;
-
+	private ArrayList<Cuentas> cuentas = new ArrayList<Cuentas>();
+	
 	public Clientes() {
 		super();
 		// TODO Auto-generated constructor stub
@@ -56,11 +60,17 @@ public class Clientes {
 	public void setTlf(String tlf) {
 		this.tlf = tlf;
 	}
+	public ArrayList<Cuentas> getCuentas() {
+		return cuentas;
+	}
 
+	public void setCuentas(ArrayList<Cuentas> cuentas) {
+		this.cuentas = cuentas;
+	}
 	@Override
 	public String toString() {
 		return "Cliente: \n -Dni=" + dni + "\n -Nombre=" + nombre + "\n -Apellidos=" + apellidos + "\n -Direccion="
-				+ direccion + "\n -Tlf=" + tlf + " .";
+				+ direccion + "\n -Tlf=" + tlf +"\n -Cuenta:=" + cuentas + " .";
 	}
 
 }
