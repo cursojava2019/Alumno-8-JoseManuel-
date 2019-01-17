@@ -64,8 +64,8 @@ public class Cuenta {
 
 	@Override
 	public String toString() {
-		return "Cuentas [saldo=" + saldo + ", codigo=" + codigo + ", comision=" + comision + ", tipo=" + tipo
-				+ ", cliente=" + cliente + "]";
+		return " Codigo=" + codigo +", saldo=" + saldo +", comision=" + comision + ", tipo=" + tipo
+				+ "\n" + cliente + "]"+"\n";
 	}
 
 }

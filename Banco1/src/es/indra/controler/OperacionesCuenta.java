@@ -15,18 +15,10 @@ public class OperacionesCuenta implements Serializable {
 		
 	public OperacionesCuenta() {
 		super();
-		// TODO Auto-generated constructor stub
+		this.cuentasCorriente= new TreeMap<Long, CuentaCorriente>();
 	}
 
-	public OperacionesCuenta(TreeMap<Long, CuentaCorriente> cc) {
-		super();
-		this.cuentasCorriente=cc;
-	}
-
-	/*
-	 * Funciones cliente -aniadir cliente -consultar info cliente
-	 * 
-	 */
+	
 		/*
 	 * Validacion del tipo de cuenta. Tiene que ser o corriente, Cuenta Vivienda o
 	 * Fondo de Inversion
@@ -40,7 +32,35 @@ public class OperacionesCuenta implements Serializable {
 			return "corriente";
 		}
 	}
-
+	/*
+	 * Funcion para añadir Cuenta
+	 */
+	public Boolean aniadirCC(CuentaCorriente c2) {
+		this.cuentasCorriente.put(c2.getCodigo(),c2);
+		System.out.println(this.cuentasCorriente.toString());
+		return true;
+	};
+	/*
+	 * Funcion para Obtener cuenta especifica
+	 */
+	public CuentaCorriente obtenerCuenta(Long codigo) {
+		
+		return this.cuentasCorriente.get(codigo);
+	};
+	/*
+	 * Funcion que actualizar la cuenta si se ha modificado algo
+	 */
+	public Boolean actualizarCuenta(Long codigo,CuentaCorriente cc) {
+		this.cuentasCorriente.replace(codigo, cc);
+		return true;
+	};
+	
+	/*
+	 * Funcion para visualizar el estado de la cuenta
+	 */
+	public static void visualizarCuenta(CuentaCorriente cc) {
+		System.out.println(cc.toString());
+	};
 	/*
 	 * Funciones ingresar dinero, sacar dinero, consultar saldo, efectuar una
 	 * revisión mensual.

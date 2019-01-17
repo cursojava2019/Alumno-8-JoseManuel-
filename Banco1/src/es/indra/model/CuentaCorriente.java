@@ -18,7 +18,7 @@ public class CuentaCorriente extends Cuenta {
 
 	@Override
 	public String toString() {
-		return "CuentaCorriente [Cuenta:" + super.toString() + "]";
+		return "CuentaCorriente [" + super.toString() + "]";
 	}
 
 }

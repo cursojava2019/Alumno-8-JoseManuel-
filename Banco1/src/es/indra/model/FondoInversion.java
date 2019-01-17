@@ -19,7 +19,7 @@ public class FondoInversion extends Cuenta {
 
 	@Override
 	public String toString() {
-		return "FondoInversion [Cuenta:" + super.toString() + "]";
+		return "FondoInversion [" + super.toString() + "]";
 	}
 
 }

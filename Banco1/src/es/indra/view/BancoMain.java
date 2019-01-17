@@ -13,7 +13,7 @@ import es.indra.model.CuentaVivienda;
 import es.indra.model.FondoInversion;
 
 public class BancoMain {
-	private static OperacionesCuenta operaciones = new OperacionesCuenta();
+	private static OperacionesCuenta operaciones = null;
 	private static Scanner ENTRADA = new Scanner(System.in);
 	
 public static Cuenta crearCuenta(Cliente cl) {
@@ -50,28 +50,36 @@ public static Cuenta crearCuenta(Cliente cl) {
 		return cl;
 	};
 
-	public static TreeMap<Long, CuentaCorriente> crearCuentaYCliente(TreeMap<Long, CuentaCorriente> cuentasCorriente) {
+	public static void crearCuentaYCliente() {
 		Cliente cl= crearCliente();
 		Cuenta c = crearCuenta(cl);
-		System.out.println(c.toString());
 		String tipo = c.getTipo();
 		if(tipo.equals("corriente")) {
-			cuentasCorriente = new TreeMap<Long, CuentaCorriente>();
 			CuentaCorriente c2 = new CuentaCorriente(c.getCodigo(),c.getSaldo(),c.getComision(),c.getTipo(),c.getCliente());
-			cuentasCorriente.put(c2.getCodigo(),c2);
-			OperacionesCuenta operacionesCuentasCorriente = new OperacionesCuenta(cuentasCorriente);
+			if(operaciones.aniadirCC(c2)) {
+			
+				System.out.println("Cuenta creada correctamente.");
+			}else {
+				System.out.println("Algo ha fallado.La cuenta no se ha creado.");
+			}
 		}
-		return cuentasCorriente;
 	}
-	public static TreeMap<Long, CuentaCorriente> ingresarDinero(TreeMap<Long, CuentaCorriente> cuentasCorriente,Long codigo,Long saldo) {
-		CuentaCorriente c2 = cuentasCorriente.get(codigo);
-		c2.setSaldo((c2.getSaldo()+saldo));
-		cuentasCorriente.replace(codigo, c2);
-		System.out.println(cuentasCorriente.toString());
-		return cuentasCorriente;
+	public static void ingresarDinero(Long codigo,Long saldo) {
+		CuentaCorriente cc = operaciones.obtenerCuenta(codigo);
+		cc.setSaldo((cc.getSaldo()+saldo));
+		operaciones.actualizarCuenta(codigo,cc);
+	}
+	public static void sacarDinero(Long codigo,Long saldo) {
+		CuentaCorriente cc = operaciones.obtenerCuenta(codigo);
+		cc.setSaldo((cc.getSaldo()-saldo));
+		operaciones.actualizarCuenta(codigo,cc);
+	}
+	public static void estadoCuenta(Long codigo) {
+		CuentaCorriente cc = operaciones.obtenerCuenta(codigo);
+		OperacionesCuenta.visualizarCuenta(cc);
 	}
 	public static void main(String[] args) {
-		TreeMap<Long, CuentaCorriente> cuentasCorriente = null;
+		operaciones = new OperacionesCuenta();
 		System.out.println("Bienevenido al Banco");
 		int opcion = 0;
 		do {
@@ -91,27 +99,33 @@ public static Cuenta crearCuenta(Cliente cl) {
 				// introducirCliente();
 				break;
 			case 2:
-				cuentasCorriente=crearCuentaYCliente(cuentasCorriente);
+				crearCuentaYCliente();
 				break;
 			case 3:
 				System.out.println("Introduce el codigo de la cuenta:");
-				Long codigo = ENTRADA.nextLong();
+				Long codigo3 = ENTRADA.nextLong();
 				ENTRADA.nextLine();				
 				System.out.println("Introduce la cantidad a ingresar:");
-				Long saldo = ENTRADA.nextLong();
+				Long saldo3 = ENTRADA.nextLong();
 				ENTRADA.nextLine();
-				if(cuentasCorriente !=null) {
-					cuentasCorriente=ingresarDinero(cuentasCorriente, codigo,saldo);
-				}else {
-					System.out.println("Es null");
-				}
+				ingresarDinero(codigo3,saldo3);
 				
 				break;
 			case 4:
-				// sacarDinero();
+				System.out.println("Introduce el codigo de la cuenta:");
+				Long codigo4 = ENTRADA.nextLong();
+				ENTRADA.nextLine();				
+				System.out.println("Introduce la cantidad a sacar:");
+				Long saldo4 = ENTRADA.nextLong();
+				ENTRADA.nextLine();
+				ingresarDinero(codigo4,saldo4);
+				sacarDinero(codigo4,saldo4);
 				break;
 			case 5:
-				// estadoCuenta();
+				System.out.println("Introduce el codigo de la cuenta:");
+				Long codigo5 = ENTRADA.nextLong();
+				ENTRADA.nextLine();				
+				estadoCuenta(codigo5);
 				break;
 			case 6:
 				// revisionMensualCuentas();
