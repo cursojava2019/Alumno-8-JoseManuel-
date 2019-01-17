@@ -11,6 +11,23 @@ public class BancoMain {
 	private static OperacionesCuenta operaciones = null;
 	private static Scanner ENTRADA = new Scanner(System.in);
 
+	public static Long pedirCodigo() {
+		Long codigo = null;
+		System.out.println("Introduce el codigo de la cuenta:");
+		codigo = ENTRADA.nextLong();
+		ENTRADA.nextLine();
+
+		return codigo;
+	}
+
+	public static Long introducirCantidad() {
+		Long codigo = null;
+		System.out.println("Introduce la cantidad a ingresar:");
+		codigo = ENTRADA.nextLong();
+		ENTRADA.nextLine();
+		return codigo;
+	}
+
 	public static Cuenta crearCuenta(Cliente cl) {
 
 		System.out.println("Vamos a crear la cuenta");
@@ -103,29 +120,15 @@ public class BancoMain {
 				crearCuentaYCliente();
 				break;
 			case 3:
-				System.out.println("Introduce el codigo de la cuenta:");
-				Long codigo3 = ENTRADA.nextLong();
-				ENTRADA.nextLine();
-				System.out.println("Introduce la cantidad a ingresar:");
-				Long saldo3 = ENTRADA.nextLong();
-				ENTRADA.nextLine();
-				ingresarDinero(codigo3, saldo3);
+
+				ingresarDinero(pedirCodigo(), introducirCantidad());
 
 				break;
 			case 4:
-				System.out.println("Introduce el codigo de la cuenta:");
-				Long codigo4 = ENTRADA.nextLong();
-				ENTRADA.nextLine();
-				System.out.println("Introduce la cantidad a sacar:");
-				Long saldo4 = ENTRADA.nextLong();
-				ENTRADA.nextLine();
-				sacarDinero(codigo4, saldo4);
+				sacarDinero(pedirCodigo(), introducirCantidad());
 				break;
 			case 5:
-				System.out.println("Introduce el codigo de la cuenta:");
-				Long codigo5 = ENTRADA.nextLong();
-				ENTRADA.nextLine();
-				estadoCuenta(codigo5);
+				estadoCuenta(pedirCodigo());
 				break;
 			case 6:
 				// revisionMensualCuentas();
