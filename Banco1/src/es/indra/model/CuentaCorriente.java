@@ -10,7 +10,6 @@ public class CuentaCorriente extends Cuenta {
 
 	public CuentaCorriente(Long codigo, Long saldo, Double comision, String tipo, Cliente cliente) {
 		super(codigo, saldo, comision, tipo, cliente);
-		// TODO Auto-generated constructor stub
 	}
 
 	public static Float getInterescc() {

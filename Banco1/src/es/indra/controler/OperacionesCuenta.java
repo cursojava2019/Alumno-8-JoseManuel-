@@ -10,33 +10,24 @@ import es.indra.model.CuentaVivienda;
 import es.indra.model.FondoInversion;
 
 public class OperacionesCuenta implements Serializable {
-	private TreeMap<String, Cliente> cliente;
-	private TreeMap<Long, Cuenta> cuenta;
-
+	private TreeMap<String, Cliente> clientes;
+	private TreeMap<Long, CuentaCorriente> cuentasCorriente;
+		
 	public OperacionesCuenta() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public OperacionesCuenta(TreeMap<String, Cliente> cliente, TreeMap<Long, Cuenta> cuenta) {
+	public OperacionesCuenta(TreeMap<Long, CuentaCorriente> cc) {
 		super();
-		this.cliente = cliente;
-		this.cuenta = cuenta;
+		this.cuentasCorriente=cc;
 	}
 
 	/*
 	 * Funciones cliente -aniadir cliente -consultar info cliente
 	 * 
 	 */
-	public Boolean aniadirCliente(Cliente c) {
-		this.cliente.put(c.getNombre(), c);
-		return true;
-	}
-
-	public Cliente obtenerCliente(String nombre) {
-		return this.cliente.get(nombre);
-	}
-	/*
+		/*
 	 * Validacion del tipo de cuenta. Tiene que ser o corriente, Cuenta Vivienda o
 	 * Fondo de Inversion
 	 */
@@ -47,19 +38,6 @@ public class OperacionesCuenta implements Serializable {
 			return s;
 		} else {
 			return "corriente";
-		}
-	}
-
-	/*
-	 * Funcion crear cuenta
-	 */
-	public void crearCuenta(Cuenta c) {
-		if (c.getTipo().equals("corriente")) {
-			CuentaCorriente cc = new CuentaCorriente(c);
-		} else if (c.getTipo().equals("vivienda")) {
-			CuentaVivienda cv = new CuentaVivienda(c);
-		} else if (c.getTipo().equals("inversion")) {
-			FondoInversion fi = new FondoInversion(c);
 		}
 	}
 

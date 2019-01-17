@@ -1,6 +1,6 @@
 package es.indra.model;
 
-public abstract class Cuenta {
+public class Cuenta {
 
 	private Long codigo, saldo;
 	private Double comision;
@@ -52,6 +52,14 @@ public abstract class Cuenta {
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+	
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	@Override
