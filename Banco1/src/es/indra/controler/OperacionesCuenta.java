@@ -4,22 +4,21 @@ import java.io.Serializable;
 import java.util.TreeMap;
 
 import es.indra.model.Cliente;
-import es.indra.model.Cuenta;
 import es.indra.model.CuentaCorriente;
 import es.indra.model.CuentaVivienda;
-import es.indra.model.FondoInversion;
 
 public class OperacionesCuenta implements Serializable {
 	private TreeMap<String, Cliente> clientes;
 	private TreeMap<Long, CuentaCorriente> cuentasCorriente;
-		
+	private TreeMap<Long, CuentaVivienda> cuentasVivienda;
+
 	public OperacionesCuenta() {
 		super();
-		this.cuentasCorriente= new TreeMap<Long, CuentaCorriente>();
+		this.cuentasCorriente = new TreeMap<Long, CuentaCorriente>();
+		this.cuentasVivienda = new TreeMap<Long, CuentaVivienda>();
 	}
 
-	
-		/*
+	/*
 	 * Validacion del tipo de cuenta. Tiene que ser o corriente, Cuenta Vivienda o
 	 * Fondo de Inversion
 	 */
@@ -29,32 +28,42 @@ public class OperacionesCuenta implements Serializable {
 		if (s.equals("corriente") || s.equals("vivienda") || s.equals("inversion")) {
 			return s;
 		} else {
-			return "corriente";
+			return null;
 		}
 	}
+
 	/*
 	 * Funcion para añadir Cuenta
 	 */
 	public Boolean aniadirCC(CuentaCorriente c2) {
-		this.cuentasCorriente.put(c2.getCodigo(),c2);
+		this.cuentasCorriente.put(c2.getCodigo(), c2);
 		System.out.println(this.cuentasCorriente.toString());
 		return true;
 	};
+
+	// aniadirCV
+	public Boolean aniadirCV(CuentaCorriente c2) {
+		this.cuentasVivienda.put(c2.getCodigo(), c2);
+		System.out.println(this.cuentasVivienda.toString());
+		return true;
+	};
+
 	/*
 	 * Funcion para Obtener cuenta especifica
 	 */
 	public CuentaCorriente obtenerCuenta(Long codigo) {
-		
+
 		return this.cuentasCorriente.get(codigo);
 	};
+
 	/*
 	 * Funcion que actualizar la cuenta si se ha modificado algo
 	 */
-	public Boolean actualizarCuenta(Long codigo,CuentaCorriente cc) {
+	public Boolean actualizarCuenta(Long codigo, CuentaCorriente cc) {
 		this.cuentasCorriente.replace(codigo, cc);
 		return true;
 	};
-	
+
 	/*
 	 * Funcion para visualizar el estado de la cuenta
 	 */

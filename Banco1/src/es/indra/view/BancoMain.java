@@ -6,6 +6,8 @@ import es.indra.controler.OperacionesCuenta;
 import es.indra.model.Cliente;
 import es.indra.model.Cuenta;
 import es.indra.model.CuentaCorriente;
+import es.indra.model.CuentaVivienda;
+import es.indra.model.FondoInversion;
 
 public class BancoMain {
 	private static OperacionesCuenta operaciones = null;
@@ -29,7 +31,7 @@ public class BancoMain {
 	}
 
 	public static Cuenta crearCuenta(Cliente cl) {
-
+		String tipo = null;
 		System.out.println("Vamos a crear la cuenta");
 		System.out.println("Introduce el codigo de la cuenta:");
 		Long codigo = ENTRADA.nextLong();
@@ -41,8 +43,12 @@ public class BancoMain {
 		Double comision = ENTRADA.nextDouble();
 		ENTRADA.nextLine();
 		System.out.println("Introduce el tipo de cuenta (Corriente,Vivienda,Inversion):");
-		String tipo = ENTRADA.nextLine();
-		tipo = operaciones.valideTipo(tipo);
+		while (tipo == null) {
+			tipo = ENTRADA.nextLine();
+			System.out.println("Introduce el tipo de cuenta (Corriente,Vivienda,Inversion):");
+			tipo = operaciones.valideTipo(tipo);
+		}
+
 		Cuenta c = new Cuenta(codigo, saldo, comision, tipo, cl);
 		return c;
 	}
@@ -72,6 +78,23 @@ public class BancoMain {
 					c.getCliente());
 			if (operaciones.aniadirCC(c2)) {
 
+				System.out.println("Cuenta creada correctamente.");
+			} else {
+				System.out.println("Algo ha fallado.La cuenta no se ha creado.");
+			}
+		} else if (tipo.equals("vivienda")) {
+			CuentaVivienda cv2 = new CuentaVivienda(c.getCodigo(), c.getSaldo(), c.getComision(), c.getTipo(),
+					c.getCliente());
+			if (operaciones.aniadirCV(cv2)) {
+				System.out.println("Cuenta creada correctamente.");
+			} else {
+				System.out.println("Algo ha fallado.La cuenta no se ha creado.");
+			}
+
+		} else if (tipo.equals("inversion")) {
+			FondoInversion fi2 = new FondoInversion(c.getCodigo(), c.getSaldo(), c.getComision(), c.getTipo(),
+					c.getCliente());
+			if (operaciones.aniadirFI(fi2)) {
 				System.out.println("Cuenta creada correctamente.");
 			} else {
 				System.out.println("Algo ha fallado.La cuenta no se ha creado.");
