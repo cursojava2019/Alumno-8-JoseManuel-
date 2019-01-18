@@ -70,7 +70,7 @@ public class BancoMain {
 	public static void crearCuentaYCliente() {
 		Cliente cl = crearCliente();
 		Cuenta c = crearCuenta(cl);
-		aniadirCuentaEspecifica(c);
+		operaciones.aniadirCuentaEspecifica(c);
 	}
 
 	public static void ingresarDinero(Long codigo, Long saldo) {

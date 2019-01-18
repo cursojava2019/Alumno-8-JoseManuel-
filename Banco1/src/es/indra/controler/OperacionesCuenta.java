@@ -7,16 +7,19 @@ import es.indra.model.Cliente;
 import es.indra.model.Cuenta;
 import es.indra.model.CuentaCorriente;
 import es.indra.model.CuentaVivienda;
+import es.indra.model.FondoInversion;
 
 public class OperacionesCuenta implements Serializable {
 	private TreeMap<String, Cliente> clientes;
 	private TreeMap<Long, CuentaCorriente> cuentasCorriente;
 	private TreeMap<Long, CuentaVivienda> cuentasVivienda;
+	private TreeMap<Long, FondoInversion> cuentasInversion;
 
 	public OperacionesCuenta() {
 		super();
 		this.cuentasCorriente = new TreeMap<Long, CuentaCorriente>();
 		this.cuentasVivienda = new TreeMap<Long, CuentaVivienda>();
+		this.cuentasInversion = new TreeMap<Long, FondoInversion>();
 	}
 
 	/*
@@ -34,41 +37,27 @@ public class OperacionesCuenta implements Serializable {
 	}
 
 	/*
-	 * Funcion para añadir Cuenta
-	 * 
-	 * String tipo = c.getTipo(); if (tipo.equals("corriente")) { CuentaCorriente c2
-	 * = new CuentaCorriente(c.getCodigo(), c.getSaldo(), c.getComision(),
-	 * c.getTipo(), c.getCliente()); if (operaciones.aniadirCC(c2)) {
-	 * 
-	 * System.out.println("Cuenta creada correctamente."); } else {
-	 * System.out.println("Algo ha fallado.La cuenta no se ha creado."); } } else if
-	 * (tipo.equals("vivienda")) { CuentaVivienda cv2 = new
-	 * CuentaVivienda(c.getCodigo(), c.getSaldo(), c.getComision(), c.getTipo(),
-	 * c.getCliente()); if (operaciones.aniadirCV(cv2)) {
-	 * System.out.println("Cuenta creada correctamente."); } else {
-	 * System.out.println("Algo ha fallado.La cuenta no se ha creado."); }
-	 * 
-	 * } else if (tipo.equals("inversion")) { FondoInversion fi2 = new
-	 * FondoInversion(c.getCodigo(), c.getSaldo(), c.getComision(), c.getTipo(),
-	 * c.getCliente()); if (operaciones.aniadirFI(fi2)) {
-	 * System.out.println("Cuenta creada correctamente."); } else {
-	 * System.out.println("Algo ha fallado.La cuenta no se ha creado."); } }
-	 *
-	 * public Boolean aniadirCC(CuentaCorriente c2) {
-	 * this.cuentasCorriente.put(c2.getCodigo(), c2);
-	 * System.out.println(this.cuentasCorriente.toString()); return true; };
-	 * 
-	 * // aniadirCV public Boolean aniadirCV(CuentaCorriente c2) {
-	 * this.cuentasVivienda.put(c2.getCodigo(), c2);
-	 * System.out.println(this.cuentasVivienda.toString()); return true; };
-	 *
-	 *
-	 * 
+	 * Funcion para añadir crear Cuenta segun su tipo
 	 */
 	public Boolean aniadirCuentaEspecifica(Cuenta c) {
+		String tipo = c.getTipo();
+		if (tipo.equals("corriente")) {
+			CuentaCorriente c2 = new CuentaCorriente(c.getCodigo(), c.getSaldo(), c.getComision(), c.getTipo(),
+					c.getCliente());
+			this.cuentasCorriente.put(c2.getCodigo(), c2);
+			System.out.println(this.cuentasCorriente.toString());
+		} else if (tipo.equals("vivienda")) {
+			CuentaVivienda cv2 = new CuentaVivienda(c.getCodigo(), c.getSaldo(), c.getComision(), c.getTipo(),
+					c.getCliente());
 
+			this.cuentasVivienda.put(cv2.getCodigo(), cv2);
+		} else if (tipo.equals("inversion")) {
+			FondoInversion fi2 = new FondoInversion(c.getCodigo(), c.getSaldo(), c.getComision(), c.getTipo(),
+					c.getCliente());
+			this.cuentasInversion.put(fi2.getCodigo(), fi2);
+		}
 		return true;
-	};
+	}
 
 	/*
 	 * Funcion para Obtener cuenta especifica
