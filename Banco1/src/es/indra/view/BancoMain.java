@@ -6,8 +6,6 @@ import es.indra.controler.OperacionesCuenta;
 import es.indra.model.Cliente;
 import es.indra.model.Cuenta;
 import es.indra.model.CuentaCorriente;
-import es.indra.model.CuentaVivienda;
-import es.indra.model.FondoInversion;
 
 public class BancoMain {
 	private static OperacionesCuenta operaciones = null;
@@ -72,34 +70,7 @@ public class BancoMain {
 	public static void crearCuentaYCliente() {
 		Cliente cl = crearCliente();
 		Cuenta c = crearCuenta(cl);
-		String tipo = c.getTipo();
-		if (tipo.equals("corriente")) {
-			CuentaCorriente c2 = new CuentaCorriente(c.getCodigo(), c.getSaldo(), c.getComision(), c.getTipo(),
-					c.getCliente());
-			if (operaciones.aniadirCC(c2)) {
-
-				System.out.println("Cuenta creada correctamente.");
-			} else {
-				System.out.println("Algo ha fallado.La cuenta no se ha creado.");
-			}
-		} else if (tipo.equals("vivienda")) {
-			CuentaVivienda cv2 = new CuentaVivienda(c.getCodigo(), c.getSaldo(), c.getComision(), c.getTipo(),
-					c.getCliente());
-			if (operaciones.aniadirCV(cv2)) {
-				System.out.println("Cuenta creada correctamente.");
-			} else {
-				System.out.println("Algo ha fallado.La cuenta no se ha creado.");
-			}
-
-		} else if (tipo.equals("inversion")) {
-			FondoInversion fi2 = new FondoInversion(c.getCodigo(), c.getSaldo(), c.getComision(), c.getTipo(),
-					c.getCliente());
-			if (operaciones.aniadirFI(fi2)) {
-				System.out.println("Cuenta creada correctamente.");
-			} else {
-				System.out.println("Algo ha fallado.La cuenta no se ha creado.");
-			}
-		}
+		aniadirCuentaEspecifica(c);
 	}
 
 	public static void ingresarDinero(Long codigo, Long saldo) {
