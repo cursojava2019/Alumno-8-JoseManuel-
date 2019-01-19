@@ -1,5 +1,13 @@
 package es.indra.view;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
 import es.indra.controler.OperacionesCuenta;
@@ -11,8 +19,46 @@ import es.indra.model.FondoInversion;
 
 public class BancoMain {
 	private static OperacionesCuenta operaciones = null;
-	private static Scanner ENTRADA = new Scanner(System.in);
+	private static Scanner ENTRADA;
+	private static final String FICHERO_OPERACIONES = "bancoOperaciones.txt";
+	public static final String NOMBRE_FICHERO_BANCO = "banco.dat";
+	
+	public static void init() throws ClassNotFoundException, IOException {
+		ENTRADA = new Scanner(System.in);
+		File file = new File(NOMBRE_FICHERO_BANCO);
+		try {
+			FileInputStream fileInput = new FileInputStream(file);
+			ObjectInputStream objecInput = new ObjectInputStream(fileInput);
+			operaciones = (OperacionesCuenta) objecInput.readObject();
+			objecInput.close();
 
+		} catch (FileNotFoundException e) {
+			operaciones = new OperacionesCuenta();
+			System.out.println("El fichero de registros del Banco se inicializara desde cero al no encontrar fichero");
+		}
+
+}
+	public static void fin() throws IOException {
+		File file = new File(NOMBRE_FICHERO_BANCO);
+		file.delete();
+		file.createNewFile();
+		FileOutputStream fileOut;
+		try {
+			fileOut = new FileOutputStream(file);
+
+			ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+			objectOut.writeObject(operaciones);
+			objectOut.flush();
+			objectOut.close();
+		} catch (IOException e) {
+			System.out.println("Error guardando en disco. SE HA PERDIDO TODO");
+			e.printStackTrace();
+		}
+
+	}
+
+
+	
 	public static Long pedirCodigo() {
 		Long codigo = null;
 		System.out.println("Introduce el codigo de la cuenta:");
@@ -22,6 +68,7 @@ public class BancoMain {
 		return codigo;
 	}
 
+	
 	public static Long introducirCantidad() {
 		Long saldo = null;
 		System.out.println("Introduce la cantidad: ");
@@ -91,16 +138,81 @@ public class BancoMain {
 				cc = (CuentaCorriente) c;
 				cc.setSaldo((cc.getSaldo() + saldo));
 				operaciones.actualizarCuenta(codigo, cc);
+				File file = new File(FICHERO_OPERACIONES);
+				if (!file.exists()) {
+					try {
+						file.createNewFile();
+					} catch (IOException e) {
+						System.out.println("Error al crear fichero");
+						e.printStackTrace();
+					}
+
+				}
+				FileWriter salida;
+				try {
+					salida = new FileWriter(file, true);
+
+					salida.write(cc.toString());
+					salida.flush();
+					salida.close();
+				} catch (Exception e) {
+
+					e.printStackTrace();
+				}
 				System.out.println("Todo correcto");
 			}else if(c.getClass().equals(cv.getClass())) {
 				cv = (CuentaVivienda) c;
 				cv.setSaldo((cv.getSaldo() + saldo));
 				operaciones.actualizarCuenta(codigo, cv);
+				File file = new File(FICHERO_OPERACIONES);
+				if (!file.exists()) {
+					try {
+						file.createNewFile();
+					} catch (IOException e) {
+						System.out.println("Error al crear fichero");
+						e.printStackTrace();
+					}
+
+				}
+				FileWriter salida;
+				try {
+					salida = new FileWriter(file, true);
+
+					salida.write(cv.toString());
+					salida.flush();
+					salida.close();
+				} catch (Exception e) {
+
+					e.printStackTrace();
+				}
+
 				System.out.println("Todo correcto");
 			}else if(c.getClass().equals(fi.getClass())) {
 				fi = (FondoInversion) c;
 				fi.setSaldo((fi.getSaldo() + saldo));
 				operaciones.actualizarCuenta(codigo, fi);
+				File file = new File(FICHERO_OPERACIONES);
+				if (!file.exists()) {
+					try {
+						file.createNewFile();
+					} catch (IOException e) {
+						System.out.println("Error al crear fichero");
+						e.printStackTrace();
+					}
+
+				}
+				FileWriter salida;
+				try {
+					salida = new FileWriter(file, true);
+
+					salida.write(fi.toString());
+					salida.flush();
+					salida.close();
+				} catch (Exception e) {
+
+					e.printStackTrace();
+				}
+
 				System.out.println("Todo correcto");
 			}else {
 				System.out.println("Algo salio mal.");
@@ -170,71 +282,101 @@ public class BancoMain {
 
 	public static void menuUsuario(String dni) {
 		int opMenuUsuario = 1;
-		do {
-			System.out.println("3- Realizar ingresos en una cuenta");
-			System.out.println("4- Sacar Dinero de una cuenta");
-			System.out.println("5- Ver el estado de la cuenta bancaria");
-			System.out.println("6- Revisión mensual de las cuentas");
-			System.out.print("1- Finalizar");
-			opMenuUsuario = ENTRADA.nextInt();
-			ENTRADA.nextLine();
-
-			switch (opMenuUsuario) {	
-				case 3:
-					ingresarDineroMU(dni,pedirCodigo(), introducirCantidad());
+		try {
+			do {
+				System.out.println("3- Realizar ingresos en una cuenta");
+				System.out.println("4- Sacar Dinero de una cuenta");
+				System.out.println("5- Ver el estado de la cuenta bancaria");
+				System.out.println("6- Revisión mensual de las cuentas");
+				System.out.print("1- Finalizar");
+				opMenuUsuario = ENTRADA.nextInt();
+				ENTRADA.nextLine();
 	
-					break;
-				case 4:
-					sacarDineroMU(dni,pedirCodigo(), introducirCantidad());
-					break;
-				case 5:
-					estadoCuentaMU(dni,pedirCodigo());
-					break;
-				case 6:
-					revisionMensualCuentasMU();
-					break;
+				switch (opMenuUsuario) {	
+					case 3:
+						ingresarDineroMU(dni,pedirCodigo(), introducirCantidad());
+						fin();
+						break;
+					case 4:
+						sacarDineroMU(dni,pedirCodigo(), introducirCantidad());
+						fin();
+						break;
+					case 5:
+						estadoCuentaMU(dni,pedirCodigo());
+						break;
+					case 6:
+						revisionMensualCuentasMU();
+						fin();
+						break;
+					case 1:
+						System.out.println("Fin del programa");
+						break;
+					default:
+						break;
+					}
+			} while (opMenuUsuario != 1);
+		} catch (Exception e) {
+			System.out.println("Error al guardar en fichero");
+			e.printStackTrace();
+		}
+		try {
+			fin();
+		} catch (IOException e) {
+			System.out.println("NO SE HA PODIDO GUARDAR.  ERROR FATAL");
+			e.printStackTrace();
+		}
+	}
+
+	public static void main(String[] args) {
+		try {
+			init();
+		} catch (ClassNotFoundException | IOException e1) {
+			System.out.println("Error al iniciar de disco. Inicializamos el concesioinaro");
+			operaciones = new OperacionesCuenta();
+		}
+		
+		System.out.println("Bienevenido al Banco");
+		int opcion = 0;
+		try {
+			do {
+				System.out.println("Introduzca la operacion que desea relaizar");
+				System.out.println("1- Crear nueva cuenta y cliente");
+				System.out.println("2- Entrar en mi menu");
+				System.out.print("0- Finalizar");
+				opcion = ENTRADA.nextInt();
+				ENTRADA.nextLine();
+	
+				switch (opcion) {
 				case 1:
+					crearCuentaYCliente();
+					fin();
+					break;
+				case 2:
+					String dniUsuario="";
+					dniUsuario=validarCliente();
+					if(!dniUsuario.equals("null")) {
+						opcion=0;
+						menuUsuario(dniUsuario);
+					};
+					
+					break;
+				case 0:
 					System.out.println("Fin del programa");
 					break;
 				default:
 					break;
 				}
-		} while (opMenuUsuario != 1);
-	}
-
-	public static void main(String[] args) {
-		operaciones = new OperacionesCuenta();
-		System.out.println("Bienevenido al Banco");
-		int opcion = 0;
-		do {
-			System.out.println("Introduzca la operacion que desea relaizar");
-			System.out.println("1- Crear nueva cuenta y cliente");
-			System.out.println("2- Entrar en mi menu");
-			System.out.print("0- Finalizar");
-			opcion = ENTRADA.nextInt();
-			ENTRADA.nextLine();
-
-			switch (opcion) {
-			case 1:
-				crearCuentaYCliente();
-				break;
-			case 2:
-				String dniUsuario="";
-				dniUsuario=validarCliente();
-				if(!dniUsuario.equals("null")) {
-					opcion=0;
-					menuUsuario(dniUsuario);
-				};
-				
-				break;
-			case 0:
-				System.out.println("Fin del programa");
-				break;
-			default:
-				break;
-			}
-		} while (opcion != 0);
-
+			} while (opcion != 0);
+		} catch (Exception e) {
+			System.out.println("Error al guardar en fichero");
+			e.printStackTrace();
+		}
+		try {
+			fin();
+		} catch (IOException e) {
+			System.out.println("NO SE HA PODIDO GUARDAR.  ERROR FATAL");
+			e.printStackTrace();
+		}
 	}
 
 }

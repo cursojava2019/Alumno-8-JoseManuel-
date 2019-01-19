@@ -1,6 +1,8 @@
 package es.indra.model;
 
-public class CuentaVivienda extends Cuenta {
+import java.io.Serializable;
+
+public class CuentaVivienda extends Cuenta implements Serializable{
 	private static final Float INTERESCV = new Float("0.2");
 
 	public CuentaVivienda() {

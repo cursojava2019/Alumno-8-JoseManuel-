@@ -1,6 +1,8 @@
 package es.indra.model;
 
-public class CuentaCorriente extends Cuenta {
+import java.io.Serializable;
+
+public class CuentaCorriente extends Cuenta implements Serializable{
 	private static final Float INTERESCC = new Float("0.1");
 
 	public CuentaCorriente() {

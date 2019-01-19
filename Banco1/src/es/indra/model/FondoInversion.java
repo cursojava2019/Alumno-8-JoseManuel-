@@ -1,6 +1,8 @@
 package es.indra.model;
 
-public class FondoInversion extends Cuenta {
+import java.io.Serializable;
+
+public class FondoInversion extends Cuenta implements Serializable{
 	private static final Float INTERESFI = new Float("0.34");
 
 	public FondoInversion() {

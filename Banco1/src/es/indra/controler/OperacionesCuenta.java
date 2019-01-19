@@ -127,6 +127,7 @@ public class OperacionesCuenta implements Serializable {
 	public Boolean actualizarCuenta(Long codigo, Object c) {
 		if(this.cuentasCorriente.get(codigo) != null) {
 			this.cuentasCorriente.replace(codigo,(CuentaCorriente) c);
+			
 		}else if(this.cuentasVivienda.get(codigo) != null) {
 			this.cuentasVivienda.replace(codigo,(CuentaVivienda) c);
 		}else if(this.cuentasInversion.get(codigo) != null) {
