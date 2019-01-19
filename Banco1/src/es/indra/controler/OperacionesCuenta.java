@@ -3,7 +3,6 @@ package es.indra.controler;
 import java.io.Serializable;
 import java.util.TreeMap;
 
-import com.sun.org.apache.regexp.internal.recompile;
 
 import es.indra.model.Cliente;
 import es.indra.model.Cuenta;
@@ -89,17 +88,35 @@ public class OperacionesCuenta implements Serializable {
 	 */
 	public Object obtenerCuenta(String dni,Long codigo) {
 		Object c = null;
+		CuentaCorriente cc;
+		CuentaVivienda cv;
+		FondoInversion fi;
 		if(this.cuentasCorriente.get(codigo) != null) {
-			String dniCliente=this.cuentasCorriente.get(codigo).getCliente().getDni();
-			if(dni.equals(dniCliente)) {
+			c=this.cuentasCorriente.get(codigo);
+			cc = (CuentaCorriente)this.cuentasCorriente.get(codigo);
+			if(dni.equals(cc.getCliente().getDni())) {
 				c= this.cuentasCorriente.get(codigo);
-			}
-			
+			}else{
+				System.out.println("La cuenta no pertenece a este cliente");
+			};
+		
 		}else if(this.cuentasVivienda.get(codigo) != null) {
-			c= this.cuentasVivienda.get(codigo);
+			c=this.cuentasVivienda.get(codigo);
+			cv = (CuentaVivienda)this.cuentasVivienda.get(codigo);
+			if(dni.equals(cv.getCliente().getDni())) {
+				c= this.cuentasVivienda.get(codigo);
+			}else{
+				System.out.println("La cuenta no pertenece a este cliente");
+			};
 		}else if(this.cuentasInversion.get(codigo) != null) {
-			c= this.cuentasInversion.get(codigo);
-		} 
+			c=this.cuentasInversion.get(codigo);
+			fi = (FondoInversion)this.cuentasInversion.get(codigo);
+			if(dni.equals(fi.getCliente().getDni())) {
+				c= this.cuentasInversion.get(codigo);
+			}else{
+				System.out.println("La cuenta no pertenece a este cliente");
+			};
+		}
 		return c;
 	};
 

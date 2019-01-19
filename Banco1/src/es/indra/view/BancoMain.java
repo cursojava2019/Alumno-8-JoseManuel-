@@ -2,8 +2,6 @@ package es.indra.view;
 
 import java.util.Scanner;
 
-import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
-
 import es.indra.controler.OperacionesCuenta;
 import es.indra.model.Cliente;
 import es.indra.model.Cuenta;
@@ -70,10 +68,11 @@ public class BancoMain {
 		return cl;
 	};
 	public static String validarCliente() {
+		
 		System.out.println("Introduzca su DNI");
 		String dni=ENTRADA.nextLine();
 		if(operaciones.existeCliente(dni) == null) {
-			dni=null;
+			dni= null;
 		};
 		return dni;
 	};
@@ -116,7 +115,7 @@ public class BancoMain {
 		operaciones.aniadirCuentaEspecifica(c);
 	}
 
-	public static void ingresarDineroMU(String dni, Long codigo, Long saldo) {
+	public static void ingresarDineroMU(String dni,Long codigo, Long saldo) {
 		Object c =operaciones.obtenerCuenta(dni,codigo);
 		if(c != null) {
 			CuentaCorriente cc = new CuentaCorriente();
@@ -141,52 +140,64 @@ public class BancoMain {
 				System.out.println("Algo salio mal.");
 			}
 		}else {
-			System.out.println("Cliente erroneo");
+			System.out.println("La cuenta no existe");
+			 
 		}
+		
 	}
 
-	public static void sacarDineroMU(String dni, Long codigo, Long saldo) {
+	public static void sacarDineroMU(String dni,Long codigo, Long saldo) {
 		Object c = operaciones.obtenerCuenta(dni,codigo);
-		CuentaCorriente cc = new CuentaCorriente();
-		CuentaVivienda cv = new CuentaVivienda();
-		FondoInversion fi = new FondoInversion();
-		if(c.getClass().equals(cc.getClass())) {
-			cc = (CuentaCorriente) c;
-			cc = OperacionesCuenta.sacarDineroCC(cc,saldo);
-			if(cc != null) {
-				operaciones.actualizarCuenta(codigo, cc);
-				System.out.println("Todo correcto");
-			}else {
-				System.out.println("Esta intentando sacar mas dinero del que dispone");
-			}
-			
-		}else if(c.getClass().equals(cv.getClass())) {
-			System.out.println("De la cuenta Vivienda no se puede sacar dinero. Lo sentimos");
-		}else if(c.getClass().equals(fi.getClass())) {
-				fi = (FondoInversion) c;
-				if(fi.getBloqueada()==false) {
-					fi = OperacionesCuenta.sacarDineroFI(fi,saldo);
-					if(fi != null) {
-						operaciones.actualizarCuenta(codigo, fi);
-						System.out.println("Todo correcto");
-					}else {
-						System.out.println("Esta intentando sacar mas de 500 euros. La cuenta ha sido bloqueada");
-						fi.setBloqueada(true);
-						operaciones.actualizarCuenta(codigo, fi);
-					}
+		if(c != null) {
+			CuentaCorriente cc = new CuentaCorriente();
+			CuentaVivienda cv = new CuentaVivienda();
+			FondoInversion fi = new FondoInversion();
+			if(c.getClass().equals(cc.getClass())) {
+				cc = (CuentaCorriente) c;
+				cc = OperacionesCuenta.sacarDineroCC(cc,saldo);
+				if(cc != null) {
+					operaciones.actualizarCuenta(codigo, cc);
+					System.out.println("Todo correcto");
 				}else {
-					System.out.println("Lo sentimos, su cuenta está bloqueada");
+					System.out.println("Esta intentando sacar mas dinero del que dispone");
 				}
-			
+				
+			}else if(c.getClass().equals(cv.getClass())) {
+				System.out.println("De la cuenta Vivienda no se puede sacar dinero. Lo sentimos");
+			}else if(c.getClass().equals(fi.getClass())) {
+					fi = (FondoInversion) c;
+					if(fi.getBloqueada()==false) {
+						fi = OperacionesCuenta.sacarDineroFI(fi,saldo);
+						if(fi != null) {
+							operaciones.actualizarCuenta(codigo, fi);
+							System.out.println("Todo correcto");
+						}else {
+							System.out.println("Esta intentando sacar mas de 500 euros. La cuenta ha sido bloqueada");
+							fi.setBloqueada(true);
+							operaciones.actualizarCuenta(codigo, fi);
+						}
+					}else {
+						System.out.println("Lo sentimos, su cuenta está bloqueada");
+					}
+				
+			}else {
+				System.out.println("Algo salio mal.");
+			}
 		}else {
-			System.out.println("Algo salio mal.");
-		}
+			System.out.println("La cuenta no existe");
+			 
+		}	
 	}
 
-	public static void estadoCuentaMU(String dni, Long codigo) {
+	public static void estadoCuentaMU(String dni,Long codigo) {
 		Object c = operaciones.obtenerCuenta(dni,codigo);
-		OperacionesCuenta.visualizarCuenta(c);
-	}
+		if(c != null) {
+			OperacionesCuenta.visualizarCuenta(c);
+		}else {
+		System.out.println("La cuenta no existe");
+		 
+		}
+}
 
 	public static void main(String[] args) {
 		operaciones = new OperacionesCuenta();
@@ -205,15 +216,13 @@ public class BancoMain {
 				crearCuentaYCliente();
 				break;
 			case 2:
-				String dni = validarCliente();
-				if(dni != null) {
+				String dniUsuario="";
+				dniUsuario=validarCliente();
+				if(dniUsuario !=null) {
 					opcion=0;
-					menuUsuario(dni);
+					menuUsuario(dniUsuario);
 				};
 				
-				break;
-			case -1:
-				menuUsuario(dni);
 				break;
 			case 0:
 				System.out.println("Fin del programa");
