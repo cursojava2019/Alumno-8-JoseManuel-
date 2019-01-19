@@ -87,10 +87,14 @@ public class OperacionesCuenta implements Serializable {
 	/*
 	 * Funcion para Obtener cuenta 
 	 */
-	public Object obtenerCuenta(Long codigo) {
+	public Object obtenerCuenta(String dni,Long codigo) {
 		Object c = null;
 		if(this.cuentasCorriente.get(codigo) != null) {
-			c= this.cuentasCorriente.get(codigo);
+			String dniCliente=this.cuentasCorriente.get(codigo).getCliente().getDni();
+			if(dni.equals(dniCliente)) {
+				c= this.cuentasCorriente.get(codigo);
+			}
+			
 		}else if(this.cuentasVivienda.get(codigo) != null) {
 			c= this.cuentasVivienda.get(codigo);
 		}else if(this.cuentasInversion.get(codigo) != null) {

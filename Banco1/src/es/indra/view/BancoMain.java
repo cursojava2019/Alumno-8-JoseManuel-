@@ -69,17 +69,15 @@ public class BancoMain {
 		Cliente cl = new Cliente(dni, nombre, apellido, direccion, tlf);
 		return cl;
 	};
-	public static Boolean validarCliente() {
-		Boolean correcto=false;
+	public static String validarCliente() {
 		System.out.println("Introduzca su DNI");
 		String dni=ENTRADA.nextLine();
-		if(operaciones.existeCliente(dni)) {
-			correcto = true;
-			
+		if(operaciones.existeCliente(dni) == null) {
+			dni=null;
 		};
-		return correcto;
+		return dni;
 	};
-	public static void menuUsuario() {
+	public static void menuUsuario(String dni) {
 		int opMenuUsuario = 1;
 		do {
 			System.out.println("3- Realizar ingresos en una cuenta");
@@ -92,14 +90,14 @@ public class BancoMain {
 
 			switch (opMenuUsuario) {	
 				case 3:
-					ingresarDinero(pedirCodigo(), introducirCantidad());
+					ingresarDineroMU(dni,pedirCodigo(), introducirCantidad());
 	
 					break;
 				case 4:
-					sacarDinero(pedirCodigo(), introducirCantidad());
+					sacarDineroMU(dni,pedirCodigo(), introducirCantidad());
 					break;
 				case 5:
-					estadoCuenta(pedirCodigo());
+					estadoCuentaMU(dni,pedirCodigo());
 					break;
 				case 6:
 					// revisionMensualCuentas();
@@ -118,33 +116,37 @@ public class BancoMain {
 		operaciones.aniadirCuentaEspecifica(c);
 	}
 
-	public static void ingresarDinero(Long codigo, Long saldo) {
-		Object c =operaciones.obtenerCuenta(codigo);
-		CuentaCorriente cc = new CuentaCorriente();
-		CuentaVivienda cv = new CuentaVivienda();
-		FondoInversion fi = new FondoInversion();
-		if(c.getClass().equals(cc.getClass())) {
-			cc = (CuentaCorriente) c;
-			cc.setSaldo((cc.getSaldo() + saldo));
-			operaciones.actualizarCuenta(codigo, cc);
-			System.out.println("Todo correcto");
-		}else if(c.getClass().equals(cv.getClass())) {
-			cv = (CuentaVivienda) c;
-			cv.setSaldo((cv.getSaldo() + saldo));
-			operaciones.actualizarCuenta(codigo, cv);
-			System.out.println("Todo correcto");
-		}else if(c.getClass().equals(fi.getClass())) {
-			fi = (FondoInversion) c;
-			fi.setSaldo((fi.getSaldo() + saldo));
-			operaciones.actualizarCuenta(codigo, fi);
-			System.out.println("Todo correcto");
+	public static void ingresarDineroMU(String dni, Long codigo, Long saldo) {
+		Object c =operaciones.obtenerCuenta(dni,codigo);
+		if(c != null) {
+			CuentaCorriente cc = new CuentaCorriente();
+			CuentaVivienda cv = new CuentaVivienda();
+			FondoInversion fi = new FondoInversion();
+			if(c.getClass().equals(cc.getClass())) {
+				cc = (CuentaCorriente) c;
+				cc.setSaldo((cc.getSaldo() + saldo));
+				operaciones.actualizarCuenta(codigo, cc);
+				System.out.println("Todo correcto");
+			}else if(c.getClass().equals(cv.getClass())) {
+				cv = (CuentaVivienda) c;
+				cv.setSaldo((cv.getSaldo() + saldo));
+				operaciones.actualizarCuenta(codigo, cv);
+				System.out.println("Todo correcto");
+			}else if(c.getClass().equals(fi.getClass())) {
+				fi = (FondoInversion) c;
+				fi.setSaldo((fi.getSaldo() + saldo));
+				operaciones.actualizarCuenta(codigo, fi);
+				System.out.println("Todo correcto");
+			}else {
+				System.out.println("Algo salio mal.");
+			}
 		}else {
-			System.out.println("Algo salio mal.");
+			System.out.println("Cliente erroneo");
 		}
 	}
 
-	public static void sacarDinero(Long codigo, Long saldo) {
-		Object c = operaciones.obtenerCuenta(codigo);
+	public static void sacarDineroMU(String dni, Long codigo, Long saldo) {
+		Object c = operaciones.obtenerCuenta(dni,codigo);
 		CuentaCorriente cc = new CuentaCorriente();
 		CuentaVivienda cv = new CuentaVivienda();
 		FondoInversion fi = new FondoInversion();
@@ -181,8 +183,8 @@ public class BancoMain {
 		}
 	}
 
-	public static void estadoCuenta(Long codigo) {
-		Object c = operaciones.obtenerCuenta(codigo);
+	public static void estadoCuentaMU(String dni, Long codigo) {
+		Object c = operaciones.obtenerCuenta(dni,codigo);
 		OperacionesCuenta.visualizarCuenta(c);
 	}
 
@@ -203,14 +205,15 @@ public class BancoMain {
 				crearCuentaYCliente();
 				break;
 			case 2:
-				if(validarCliente()) {
+				String dni = validarCliente();
+				if(dni != null) {
 					opcion=0;
-					menuUsuario();
+					menuUsuario(dni);
 				};
 				
 				break;
 			case -1:
-				menuUsuario();
+				menuUsuario(dni);
 				break;
 			case 0:
 				System.out.println("Fin del programa");
