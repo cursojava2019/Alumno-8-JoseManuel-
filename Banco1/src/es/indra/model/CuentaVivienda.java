@@ -7,8 +7,8 @@ public class CuentaVivienda extends Cuenta {
 		super();
 	}
 
-	public CuentaVivienda(Long codigo, Long saldo, Double comision, String tipo, Cliente cliente) {
-		super(codigo, saldo, comision, tipo, cliente);
+	public CuentaVivienda(Long codigo, Long saldo, Double comision, String tipo, Cliente cliente,Boolean bloqueada) {
+		super(codigo, saldo, comision, tipo, cliente,bloqueada);
 	}
 
 	public static Float getInterescv() {

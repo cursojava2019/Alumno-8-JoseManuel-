@@ -8,8 +8,8 @@ public class FondoInversion extends Cuenta {
 		// TODO Auto-generated constructor stub
 	}
 
-	public FondoInversion(Long codigo, Long saldo, Double comision, String tipo, Cliente cliente) {
-		super(codigo, saldo, comision, tipo, cliente);
+	public FondoInversion(Long codigo, Long saldo, Double comision, String tipo, Cliente cliente,Boolean bloqueada) {
+		super(codigo, saldo, comision, tipo, cliente,bloqueada);
 		// TODO Auto-generated constructor stub
 	}
 

@@ -2,10 +2,14 @@ package es.indra.view;
 
 import java.util.Scanner;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
+
 import es.indra.controler.OperacionesCuenta;
 import es.indra.model.Cliente;
 import es.indra.model.Cuenta;
 import es.indra.model.CuentaCorriente;
+import es.indra.model.CuentaVivienda;
+import es.indra.model.FondoInversion;
 
 public class BancoMain {
 	private static OperacionesCuenta operaciones = null;
@@ -21,11 +25,11 @@ public class BancoMain {
 	}
 
 	public static Long introducirCantidad() {
-		Long codigo = null;
-		System.out.println("Introduce la cantidad a ingresar:");
-		codigo = ENTRADA.nextLong();
+		Long saldo = null;
+		System.out.println("Introduce la cantidad: ");
+		saldo = ENTRADA.nextLong();
 		ENTRADA.nextLine();
-		return codigo;
+		return saldo;
 	}
 
 	public static Cuenta crearCuenta(Cliente cl) {
@@ -40,14 +44,13 @@ public class BancoMain {
 		System.out.println("Introduce la comision de la cuenta:");
 		Double comision = ENTRADA.nextDouble();
 		ENTRADA.nextLine();
-		System.out.println("Introduce el tipo de cuenta (Corriente,Vivienda,Inversion):");
 		while (tipo == null) {
-			tipo = ENTRADA.nextLine();
 			System.out.println("Introduce el tipo de cuenta (Corriente,Vivienda,Inversion):");
+			tipo = ENTRADA.nextLine();
 			tipo = operaciones.valideTipo(tipo);
 		}
 
-		Cuenta c = new Cuenta(codigo, saldo, comision, tipo, cl);
+		Cuenta c = new Cuenta(codigo, saldo, comision, tipo, cl,false);
 		return c;
 	}
 
@@ -66,7 +69,49 @@ public class BancoMain {
 		Cliente cl = new Cliente(dni, nombre, apellido, direccion, tlf);
 		return cl;
 	};
+	public static Boolean validarCliente() {
+		Boolean correcto=false;
+		System.out.println("Introduzca su DNI");
+		String dni=ENTRADA.nextLine();
+		if(operaciones.existeCliente(dni)) {
+			correcto = true;
+			
+		};
+		return correcto;
+	};
+	public static void menuUsuario() {
+		int opMenuUsuario = 1;
+		do {
+			System.out.println("3- Realizar ingresos en una cuenta");
+			System.out.println("4- Sacar Dinero de una cuenta");
+			System.out.println("5- Ver el estado de la cuenta bancaria");
+			System.out.println("6- Revisión mensual de las cuentas");
+			System.out.print("1- Finalizar");
+			opMenuUsuario = ENTRADA.nextInt();
+			ENTRADA.nextLine();
 
+			switch (opMenuUsuario) {	
+				case 3:
+					ingresarDinero(pedirCodigo(), introducirCantidad());
+	
+					break;
+				case 4:
+					sacarDinero(pedirCodigo(), introducirCantidad());
+					break;
+				case 5:
+					estadoCuenta(pedirCodigo());
+					break;
+				case 6:
+					// revisionMensualCuentas();
+					break;
+				case 1:
+					System.out.println("Fin del programa");
+					break;
+				default:
+					break;
+				}
+		} while (opMenuUsuario != 1);
+	}
 	public static void crearCuentaYCliente() {
 		Cliente cl = crearCliente();
 		Cuenta c = crearCuenta(cl);
@@ -74,20 +119,71 @@ public class BancoMain {
 	}
 
 	public static void ingresarDinero(Long codigo, Long saldo) {
-		CuentaCorriente cc = operaciones.obtenerCuenta(codigo);
-		cc.setSaldo((cc.getSaldo() + saldo));
-		operaciones.actualizarCuenta(codigo, cc);
+		Object c =operaciones.obtenerCuenta(codigo);
+		CuentaCorriente cc = new CuentaCorriente();
+		CuentaVivienda cv = new CuentaVivienda();
+		FondoInversion fi = new FondoInversion();
+		if(c.getClass().equals(cc.getClass())) {
+			cc = (CuentaCorriente) c;
+			cc.setSaldo((cc.getSaldo() + saldo));
+			operaciones.actualizarCuenta(codigo, cc);
+			System.out.println("Todo correcto");
+		}else if(c.getClass().equals(cv.getClass())) {
+			cv = (CuentaVivienda) c;
+			cv.setSaldo((cv.getSaldo() + saldo));
+			operaciones.actualizarCuenta(codigo, cv);
+			System.out.println("Todo correcto");
+		}else if(c.getClass().equals(fi.getClass())) {
+			fi = (FondoInversion) c;
+			fi.setSaldo((fi.getSaldo() + saldo));
+			operaciones.actualizarCuenta(codigo, fi);
+			System.out.println("Todo correcto");
+		}else {
+			System.out.println("Algo salio mal.");
+		}
 	}
 
 	public static void sacarDinero(Long codigo, Long saldo) {
-		CuentaCorriente cc = operaciones.obtenerCuenta(codigo);
-		cc.setSaldo((cc.getSaldo() - saldo));
-		operaciones.actualizarCuenta(codigo, cc);
+		Object c = operaciones.obtenerCuenta(codigo);
+		CuentaCorriente cc = new CuentaCorriente();
+		CuentaVivienda cv = new CuentaVivienda();
+		FondoInversion fi = new FondoInversion();
+		if(c.getClass().equals(cc.getClass())) {
+			cc = (CuentaCorriente) c;
+			cc = OperacionesCuenta.sacarDineroCC(cc,saldo);
+			if(cc != null) {
+				operaciones.actualizarCuenta(codigo, cc);
+				System.out.println("Todo correcto");
+			}else {
+				System.out.println("Esta intentando sacar mas dinero del que dispone");
+			}
+			
+		}else if(c.getClass().equals(cv.getClass())) {
+			System.out.println("De la cuenta Vivienda no se puede sacar dinero. Lo sentimos");
+		}else if(c.getClass().equals(fi.getClass())) {
+				fi = (FondoInversion) c;
+				if(fi.getBloqueada()==false) {
+					fi = OperacionesCuenta.sacarDineroFI(fi,saldo);
+					if(fi != null) {
+						operaciones.actualizarCuenta(codigo, fi);
+						System.out.println("Todo correcto");
+					}else {
+						System.out.println("Esta intentando sacar mas de 500 euros. La cuenta ha sido bloqueada");
+						fi.setBloqueada(true);
+						operaciones.actualizarCuenta(codigo, fi);
+					}
+				}else {
+					System.out.println("Lo sentimos, su cuenta está bloqueada");
+				}
+			
+		}else {
+			System.out.println("Algo salio mal.");
+		}
 	}
 
 	public static void estadoCuenta(Long codigo) {
-		CuentaCorriente cc = operaciones.obtenerCuenta(codigo);
-		OperacionesCuenta.visualizarCuenta(cc);
+		Object c = operaciones.obtenerCuenta(codigo);
+		OperacionesCuenta.visualizarCuenta(c);
 	}
 
 	public static void main(String[] args) {
@@ -96,36 +192,25 @@ public class BancoMain {
 		int opcion = 0;
 		do {
 			System.out.println("Introduzca la operacion que desea relaizar");
-			System.out.println("1- Introducir cliente");
-			System.out.println("2- Crear cuenta");
-			System.out.println("3- Realizar ingresos en una cuenta");
-			System.out.println("4- Sacar Dinero de una cuenta");
-			System.out.println("5- Ver el estado de la cuenta bancaria");
-			System.out.println("6- Revisión mensual de las cuentas");
+			System.out.println("1- Crear nueva cuenta y cliente");
+			System.out.println("2- Entrar en mi menu");
 			System.out.print("0- Finalizar");
 			opcion = ENTRADA.nextInt();
 			ENTRADA.nextLine();
 
 			switch (opcion) {
 			case 1:
-				// introducirCliente();
-				break;
-			case 2:
 				crearCuentaYCliente();
 				break;
-			case 3:
-
-				ingresarDinero(pedirCodigo(), introducirCantidad());
-
+			case 2:
+				if(validarCliente()) {
+					opcion=0;
+					menuUsuario();
+				};
+				
 				break;
-			case 4:
-				sacarDinero(pedirCodigo(), introducirCantidad());
-				break;
-			case 5:
-				estadoCuenta(pedirCodigo());
-				break;
-			case 6:
-				// revisionMensualCuentas();
+			case -1:
+				menuUsuario();
 				break;
 			case 0:
 				System.out.println("Fin del programa");
