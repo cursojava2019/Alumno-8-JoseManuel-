@@ -1,6 +1,7 @@
 package es.indra.controler;
 
 import java.io.Serializable;
+import java.util.Map;
 import java.util.TreeMap;
 
 
@@ -165,5 +166,33 @@ public class OperacionesCuenta implements Serializable {
 		}
 		
 		return fi;
+	}
+
+	public void revisionMensualCuentas() {
+		CuentaCorriente cc;
+		CuentaVivienda cv;
+		FondoInversion fi;
+		for(Map.Entry<Long, CuentaCorriente> entry : this.cuentasCorriente.entrySet()) {
+			cc=entry.getValue();
+			cc.setSaldo((long) (cc.getSaldo()*cc.getInterescc()-cc.getComision()));
+			entry.setValue(cc);
+			System.out.println("El saldo de las cuentas se han actualizado");
+			System.out.println(entry.getKey() + "/" + entry.getValue());
+		}
+		for(Map.Entry<Long, CuentaVivienda> entry : this.cuentasVivienda.entrySet()) {
+			cv=entry.getValue();
+			cv.setSaldo((long) (cv.getSaldo()*cv.getInterescv()));
+			entry.setValue(cv);
+			System.out.println("El saldo de las cuentas se han actualizado");
+			System.out.println(entry.getKey() + "/" + entry.getValue());
+		}
+		for(Map.Entry<Long, FondoInversion> entry : this.cuentasInversion.entrySet()) {
+			fi=entry.getValue();
+			fi.setSaldo((long) (fi.getSaldo()*fi.getInteresfi()-fi.getComision()));
+			entry.setValue(fi);
+			System.out.println("El saldo de las cuentas se han actualizado");
+			System.out.println(entry.getKey() + "/" + entry.getValue());
+		}
+		
 	}
 }

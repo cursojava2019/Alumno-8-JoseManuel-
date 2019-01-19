@@ -29,7 +29,15 @@ public class BancoMain {
 		ENTRADA.nextLine();
 		return saldo;
 	}
-
+	public static String validarCliente() {
+		
+		System.out.println("Introduzca su DNI");
+		String dni=ENTRADA.nextLine();
+		if(!operaciones.existeCliente(dni)) {
+			dni="null";
+		};
+		return dni;
+	};
 	public static Cuenta crearCuenta(Cliente cl) {
 		String tipo = null;
 		System.out.println("Vamos a crear la cuenta");
@@ -67,49 +75,7 @@ public class BancoMain {
 		Cliente cl = new Cliente(dni, nombre, apellido, direccion, tlf);
 		return cl;
 	};
-	public static String validarCliente() {
-		
-		System.out.println("Introduzca su DNI");
-		String dni=ENTRADA.nextLine();
-		if(operaciones.existeCliente(dni) == null) {
-			dni= null;
-		};
-		return dni;
-	};
-	public static void menuUsuario(String dni) {
-		int opMenuUsuario = 1;
-		do {
-			System.out.println("3- Realizar ingresos en una cuenta");
-			System.out.println("4- Sacar Dinero de una cuenta");
-			System.out.println("5- Ver el estado de la cuenta bancaria");
-			System.out.println("6- Revisión mensual de las cuentas");
-			System.out.print("1- Finalizar");
-			opMenuUsuario = ENTRADA.nextInt();
-			ENTRADA.nextLine();
-
-			switch (opMenuUsuario) {	
-				case 3:
-					ingresarDineroMU(dni,pedirCodigo(), introducirCantidad());
-	
-					break;
-				case 4:
-					sacarDineroMU(dni,pedirCodigo(), introducirCantidad());
-					break;
-				case 5:
-					estadoCuentaMU(dni,pedirCodigo());
-					break;
-				case 6:
-					// revisionMensualCuentas();
-					break;
-				case 1:
-					System.out.println("Fin del programa");
-					break;
-				default:
-					break;
-				}
-		} while (opMenuUsuario != 1);
-	}
-	public static void crearCuentaYCliente() {
+		public static void crearCuentaYCliente() {
 		Cliente cl = crearCliente();
 		Cuenta c = crearCuenta(cl);
 		operaciones.aniadirCuentaEspecifica(c);
@@ -198,6 +164,43 @@ public class BancoMain {
 		 
 		}
 }
+	public static void revisionMensualCuentasMU() {
+		operaciones.revisionMensualCuentas();
+	};
+
+	public static void menuUsuario(String dni) {
+		int opMenuUsuario = 1;
+		do {
+			System.out.println("3- Realizar ingresos en una cuenta");
+			System.out.println("4- Sacar Dinero de una cuenta");
+			System.out.println("5- Ver el estado de la cuenta bancaria");
+			System.out.println("6- Revisión mensual de las cuentas");
+			System.out.print("1- Finalizar");
+			opMenuUsuario = ENTRADA.nextInt();
+			ENTRADA.nextLine();
+
+			switch (opMenuUsuario) {	
+				case 3:
+					ingresarDineroMU(dni,pedirCodigo(), introducirCantidad());
+	
+					break;
+				case 4:
+					sacarDineroMU(dni,pedirCodigo(), introducirCantidad());
+					break;
+				case 5:
+					estadoCuentaMU(dni,pedirCodigo());
+					break;
+				case 6:
+					revisionMensualCuentasMU();
+					break;
+				case 1:
+					System.out.println("Fin del programa");
+					break;
+				default:
+					break;
+				}
+		} while (opMenuUsuario != 1);
+	}
 
 	public static void main(String[] args) {
 		operaciones = new OperacionesCuenta();
@@ -218,7 +221,7 @@ public class BancoMain {
 			case 2:
 				String dniUsuario="";
 				dniUsuario=validarCliente();
-				if(dniUsuario !=null) {
+				if(!dniUsuario.equals("null")) {
 					opcion=0;
 					menuUsuario(dniUsuario);
 				};
