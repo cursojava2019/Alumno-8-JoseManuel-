@@ -2,15 +2,15 @@ package es.indra.model.entities;
 
 import java.io.Serializable;
 
-public class CuentaVivienda extends Cuenta implements Serializable{
+public class CuentaVivienda extends Cuenta implements Serializable {
 	private static final Float INTERESCV = new Float("0.2");
 
 	public CuentaVivienda() {
 		super();
 	}
 
-	public CuentaVivienda(Long codigo, Long saldo, Double comision, String tipo, Cliente cliente,Boolean bloqueada) {
-		super(codigo, saldo, comision, tipo, cliente,bloqueada);
+	public CuentaVivienda(Long codigo, Long saldo, Double comision, String tipo, String dniCliente, Boolean bloqueada) {
+		super(codigo, saldo, comision, tipo, dniCliente, bloqueada);
 	}
 
 	public static Float getInterescv() {

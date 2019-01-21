@@ -5,24 +5,23 @@ public class Cuenta {
 	private Long codigo, saldo;
 	private Double comision;
 	private String tipo;
-	private Cliente cliente;
+	private String dniCliente;
 	private Boolean bloqueada;
 
 	public Cuenta() {
 		super();
 		this.comision = new Double("0.6");
-		this.cliente = new Cliente();
-		this.bloqueada=false;
+		this.bloqueada = false;
 	}
 
-	public Cuenta(Long codigo, Long saldo, Double comision, String tipo, Cliente cliente,Boolean bloqueada) {
+	public Cuenta(Long codigo, Long saldo, Double comision, String tipo, String dniCliente, Boolean bloqueada) {
 		super();
 		this.codigo = codigo;
 		this.saldo = saldo;
 		this.comision = comision;
 		this.tipo = tipo;
-		this.cliente = cliente;
-		this.bloqueada=false;
+		this.dniCliente = dniCliente;
+		this.bloqueada = false;
 	}
 
 	public Long getCodigo() {
@@ -36,7 +35,7 @@ public class Cuenta {
 	public Long getSaldo() {
 		return saldo;
 	}
-	
+
 	public Boolean getBloqueada() {
 		return bloqueada;
 	}
@@ -64,20 +63,19 @@ public class Cuenta {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
-	
-	public Cliente getCliente() {
-		return cliente;
+
+	public String getDniCliente() {
+		return dniCliente;
 	}
 
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
+	public void setDniCliente(String dniCliente) {
+		this.dniCliente = dniCliente;
 	}
-	
 
 	@Override
 	public String toString() {
-		return " Codigo=" + codigo +", saldo=" + saldo +", comision=" + comision + ", tipo=" + tipo
-				+ "\n" + cliente + "]"+"\n";
+		return "Cuenta [codigo=" + codigo + ", saldo=" + saldo + ", comision=" + comision + ", tipo=" + tipo
+				+ ", dniCliente=" + dniCliente + ", bloqueada=" + bloqueada + "]";
 	}
 
 }

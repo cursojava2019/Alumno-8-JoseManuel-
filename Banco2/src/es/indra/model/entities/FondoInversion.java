@@ -2,7 +2,7 @@ package es.indra.model.entities;
 
 import java.io.Serializable;
 
-public class FondoInversion extends Cuenta implements Serializable{
+public class FondoInversion extends Cuenta implements Serializable {
 	private static final Float INTERESFI = new Float("0.34");
 
 	public FondoInversion() {
@@ -10,8 +10,8 @@ public class FondoInversion extends Cuenta implements Serializable{
 		// TODO Auto-generated constructor stub
 	}
 
-	public FondoInversion(Long codigo, Long saldo, Double comision, String tipo, Cliente cliente,Boolean bloqueada) {
-		super(codigo, saldo, comision, tipo, cliente,bloqueada);
+	public FondoInversion(Long codigo, Long saldo, Double comision, String tipo, String dniCliente, Boolean bloqueada) {
+		super(codigo, saldo, comision, tipo, dniCliente, bloqueada);
 		// TODO Auto-generated constructor stub
 	}
 

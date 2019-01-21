@@ -120,11 +120,11 @@ public class ClienteDao implements Dao<String, Cliente> {
 
 	}
 
-	private List<Cuenta> obtenerVehiculos(ResultSet resultado) throws SQLException {
+	private List<Cuenta> obtenerCuentas(ResultSet resultado) throws SQLException {
 		ArrayList<Cuenta> cuentas = new ArrayList<Cuenta>();
 		while (resultado.next()) {
 
-			Cuenta = CuentaDao.obtenerCuenta(resultado);
+			Cuenta cuenta = CuentaDao.obtenerCuenta(resultado);
 			cuentas.add(cuenta);
 		}
 		return cuentas;
