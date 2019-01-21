@@ -1,7 +1,9 @@
-package es.indra.model;
+package es.indra.model.service;
 
+import es.indra.model.dao.ClienteDao;
 import es.indra.model.entities.Cliente;
-import es.indra.model.support.*;
+import es.indra.model.support.Dao;
+import es.indra.model.support.Service;
 
 public class ClienteService extends Service<String, Cliente> {
 
