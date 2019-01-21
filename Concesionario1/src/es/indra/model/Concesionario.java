@@ -61,10 +61,10 @@ public class Concesionario implements Serializable {
 	}
 
 	public List<Vehiculo> vehiculosDisponibles() {
-		ArrayList<Vehiculo> listado = new ArrayList<Vehiculo>(vehiculos.values());
+		ArrayList<Vehiculo> listado = new ArrayList<Vehiculo>(this.vehiculos.values());
 		LinkedList<Vehiculo> disponibles = new LinkedList<Vehiculo>();
 		for (Vehiculo vehiculo : listado) {
-			if (vehiculo.getVendido()) {
+			if (!vehiculo.getVendido()) {
 				disponibles.add(vehiculo);
 			}
 		}
@@ -72,7 +72,7 @@ public class Concesionario implements Serializable {
 	}
 
 	public List<Vehiculo> vehiculosPropietario(String dni) {
-		Comprador c = compradores.get(dni);
+		Comprador c = this.compradores.get(dni);
 		if (c != null) {
 			return c.getPropiedades();
 		} else {
@@ -82,7 +82,7 @@ public class Concesionario implements Serializable {
 	}
 
 	public Venta nuevaVenta(String dni, Long codigo, Double precio) {
-		Comprador comprador = compradores.get(dni);
+		Comprador comprador = this.compradores.get(dni);
 		Vehiculo vehiculo = this.vehiculos.get(codigo);
 		if (comprador != null && vehiculo != null) {
 			Venta v = new Venta();

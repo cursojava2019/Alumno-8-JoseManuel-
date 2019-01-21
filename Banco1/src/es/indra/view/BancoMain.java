@@ -22,7 +22,9 @@ public class BancoMain {
 	private static Scanner ENTRADA;
 	private static final String FICHERO_OPERACIONES = "bancoOperaciones.txt";
 	public static final String NOMBRE_FICHERO_BANCO = "banco.dat";
-	
+	/*
+	 *Funcion que crean, leen y cierra el fichero donde se guardan las operaciones del banco 
+	 */
 	public static void init() throws ClassNotFoundException, IOException {
 		ENTRADA = new Scanner(System.in);
 		File file = new File(NOMBRE_FICHERO_BANCO);
@@ -57,7 +59,13 @@ public class BancoMain {
 
 	}
 
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/*
+	 Funciones donde se le pide al usuario que introduzca el codigo de la cuenta,
+	 al introducir el dni comprobar que existe y la cantidad que va a ingresar o sacar  
+	 *
+	 */
+	
 	
 	public static Long pedirCodigo() {
 		Long codigo = null;
@@ -85,6 +93,11 @@ public class BancoMain {
 		};
 		return dni;
 	};
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	/*
+	 * Funciones para crear una cuenta generica de tipo Cuenta, crear el cliente y despues juntar esa cuenta (especificar el tipo)
+	 * y añadirle el cliente
+	 */
 	public static Cuenta crearCuenta(Cliente cl) {
 		String tipo = null;
 		System.out.println("Vamos a crear la cuenta");
@@ -128,7 +141,12 @@ public class BancoMain {
 		operaciones.aniadirCuentaEspecifica(c);
 	}
 
-	public static void ingresarDineroMU(String dni,Long codigo, Long saldo) {
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
+	/*/////////////////////////////////////////////////////////////////////////////
+	 * 	Funciones para el menu del Usuario. A este menu se accede una vez que se haya validado el cliente
+	 */////////////////////////////////////////////////////////////////////////////////////////
+		public static void ingresarDineroMU(String dni,Long codigo, Long saldo) {
 		Object c =operaciones.obtenerCuenta(dni,codigo);
 		if(c != null) {
 			CuentaCorriente cc = new CuentaCorriente();
@@ -326,7 +344,7 @@ public class BancoMain {
 			e.printStackTrace();
 		}
 	}
-
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static void main(String[] args) {
 		try {
 			init();

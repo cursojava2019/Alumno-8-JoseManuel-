@@ -21,10 +21,8 @@ public class Ejercicio3Main {
 			esFuerte[i]=contrasenas[i].esFuerte(contrasenas[i].getPass());
 			if(esFuerte[i]) {
 				System.out.println(contrasenas[i].getPass()+" es fuerte");
-				System.out.println(esFuerte[i]);
 			}else {
 				System.out.println(contrasenas[i].getPass()+" es debil");
-				System.out.println(esFuerte[i]);
 			}
 			
 		};

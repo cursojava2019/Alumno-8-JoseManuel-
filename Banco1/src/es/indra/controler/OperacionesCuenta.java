@@ -39,7 +39,7 @@ public class OperacionesCuenta implements Serializable {
 		}
 	}
 	/*
-	 * Funcion para saber si el cliente no esta registrado
+	 * Funcion para saber si el cliente esta o no esta registrado
 	 */
 	
 	public Boolean existeCliente(String dni) {
@@ -55,7 +55,8 @@ public class OperacionesCuenta implements Serializable {
 		
 	}
 	/*
-	 * Funcion para añadir crear Cuenta segun su tipo
+	 * Funcion para crear la Cuenta segun su tipo.Corriente,vivienda o inversion. Aqui añadimos al Treemap
+	 * de clientes cada cliente que se haya registrado para su posterior autentificacion.
 	 */
 	public Boolean aniadirCuentaEspecifica(Cuenta c) {
 		String tipo = c.getTipo();
@@ -122,7 +123,7 @@ public class OperacionesCuenta implements Serializable {
 	};
 
 	/*
-	 * Funcion que actualizar la cuenta si se ha modificado algo
+	 * Funcion que actualizar la cuenta para añadir lo que se haya modificado en la cuenta
 	 */
 	public Boolean actualizarCuenta(Long codigo, Object c) {
 		if(this.cuentasCorriente.get(codigo) != null) {
@@ -168,7 +169,10 @@ public class OperacionesCuenta implements Serializable {
 		
 		return fi;
 	}
-
+/*
+ * Funcion que fuerza la revision mensual de todas las cuentas. Donde al saldo se le aplica
+ * la siguiente formula: saldo=saldo*interes_cuenta-comision.
+ */
 	public void revisionMensualCuentas() {
 		CuentaCorriente cc;
 		CuentaVivienda cv;

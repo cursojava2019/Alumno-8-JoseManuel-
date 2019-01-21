@@ -54,10 +54,8 @@ public class Password {
 		 for(int i=0; i<pass.length();i++) { 
 		      if(Character.isUpperCase(caracteres[i])){
 		    	  contMayus++;
-		    	  System.out.println("Hola1");
 		      }else if(Character.isLowerCase(caracteres[i])){
 		    	  conMinus++;
-		    	  System.out.println("Hola2");
 		      }else if(Character.isDigit(caracteres[i])) {
 		    	  conNum++;
 		    	  
@@ -66,9 +64,9 @@ public class Password {
 		if(conMinus>=1 && contMayus>=2 && conNum>=5) {
 			esFuerte=true;
 		}else {
-			System.out.println("conMayus "+contMayus);
-			System.out.println("conMinus "+conMinus);
-			System.out.println("conNum "+conNum);
+			System.out.println("Cantidad Mayusculas "+contMayus);
+			System.out.println("Cantidad Minusculas "+conMinus);
+			System.out.println("Cantidad Numeros "+conNum);
 			esFuerte=false;
 		}
 		return esFuerte;
