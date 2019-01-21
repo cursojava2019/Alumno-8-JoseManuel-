@@ -11,11 +11,11 @@ import java.io.ObjectOutputStream;
 import java.util.Scanner;
 
 import es.indra.controler.OperacionesCuenta;
-import es.indra.model.Cliente;
-import es.indra.model.Cuenta;
-import es.indra.model.CuentaCorriente;
-import es.indra.model.CuentaVivienda;
-import es.indra.model.FondoInversion;
+import es.indra.model.entities.Cliente;
+import es.indra.model.entities.Cuenta;
+import es.indra.model.entities.CuentaCorriente;
+import es.indra.model.entities.CuentaVivienda;
+import es.indra.model.entities.FondoInversion;
 
 public class BancoMain {
 	private static OperacionesCuenta operaciones = null;

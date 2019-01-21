@@ -1,4 +1,4 @@
-package es.indra.model;
+package es.indra.model.entities;
 
 public class Cuenta {
 

@@ -4,12 +4,11 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.TreeMap;
 
-
-import es.indra.model.Cliente;
-import es.indra.model.Cuenta;
-import es.indra.model.CuentaCorriente;
-import es.indra.model.CuentaVivienda;
-import es.indra.model.FondoInversion;
+import es.indra.model.entities.Cliente;
+import es.indra.model.entities.Cuenta;
+import es.indra.model.entities.CuentaCorriente;
+import es.indra.model.entities.CuentaVivienda;
+import es.indra.model.entities.FondoInversion;
 
 public class OperacionesCuenta implements Serializable {
 	private TreeMap<String, Cliente> clientes;
