@@ -117,28 +117,29 @@ public class Banco2Main {
 	 * /////////////////////////////////////////////////////////////////////////////
 	 * Funciones para el menu del Usuario. A este menu se accede una vez que se haya
 	 * validado el cliente
-	*/  
-	  public static void ingresarDineroMU(String dni, Long codigo, Long cantidad) {
-		  Cuenta c = operaciones.obtenerCuenta(dni, codigo);
-		  if (c != null) {
-			  operaciones.ingresarDinero(c, cantidad);
-		  } else {
-			  System.out.println("La cuenta no existe");
-		  
-		  }
-		  
-	  }
-	  
-	  public static void sacarDineroMU(String dni, Long codigo, Long cantidad) {
-		  Cuenta c = operaciones.obtenerCuenta(dni, codigo);
-		  if (c != null) {
-			  operaciones.sacarDinero(c, cantidad);
-		  } else {
-			  System.out.println("La cuenta no existe");
-		  
-		  }
-	  }
-	 /////////////////////////////////////////////////////////////////////////////////////////
+	 */
+	public static void ingresarDineroMU(String dni, Long codigo, Long cantidad) {
+		Cuenta c = operaciones.obtenerCuenta(dni, codigo);
+		if (c != null) {
+			operaciones.ingresarDinero(c, cantidad);
+		} else {
+			System.out.println("La cuenta no existe");
+
+		}
+
+	}
+
+	public static void sacarDineroMU(String dni, Long codigo, Long cantidad) {
+		Cuenta c = operaciones.obtenerCuenta(dni, codigo);
+		if (c != null) {
+			operaciones.sacarDinero(c, cantidad);
+
+		} else {
+			System.out.println("La cuenta no existe");
+
+		}
+	}
+	/////////////////////////////////////////////////////////////////////////////////////////
 
 	public static void estadoCuentaMU(Long codigo) {
 		Cuenta cuenta = operaciones.visualizarCuenta(codigo);
@@ -149,9 +150,9 @@ public class Banco2Main {
 		}
 	}
 
-//	public static void revisionMensualCuentasMU() {
-//		operaciones.revisionMensualCuentas();
-//	};
+	public static void revisionMensualCuentasMU() {
+		operaciones.revisionMensualCuentas();
+	};
 
 	public static void menuUsuario(String dni) {
 		int opMenuUsuario = 1;
@@ -178,7 +179,7 @@ public class Banco2Main {
 					estadoCuentaMU(pedirCodigo());
 					break;
 				case 6:
-//					revisionMensualCuentasMU();
+					revisionMensualCuentasMU();
 
 					break;
 				case 1:

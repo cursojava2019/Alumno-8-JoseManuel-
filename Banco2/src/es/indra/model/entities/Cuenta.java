@@ -21,7 +21,7 @@ public class Cuenta {
 		this.comision = comision;
 		this.tipo = tipo;
 		this.dniCliente = dniCliente;
-		this.bloqueada = false;
+		this.bloqueada = bloqueada;
 	}
 
 	public Long getCodigo() {

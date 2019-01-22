@@ -1,4 +1,5 @@
 package es.indra.model.dao;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -51,9 +52,35 @@ public class CuentaDao implements Dao<Long, Cuenta> {
 			ps.executeUpdate();
 			co.close();
 		} catch (SQLException e) {
-			System.out.println("Error al ingresar el dinero");
+			System.out.println("Error al actualizar el saldo de la cuenta");
 			throw new DaoException();
-		}	
+		}
+
+	}
+
+	public void bloquear(Cuenta entity) throws DaoException {
+		try {
+			Connection co = getConexion();
+			if (entity.getBloqueada()) {
+				PreparedStatement ps = co.prepareStatement("UPDATE CUENTA SET bloqueada=? WHERE codigo=?");
+				ps.setBoolean(1, entity.getBloqueada());
+				ps.setLong(2, entity.getCodigo());
+				ps.executeUpdate();
+				co.close();
+
+			} else {
+				PreparedStatement ps = co.prepareStatement("UPDATE CUENTA SET bloqueada=? WHERE codigo=?");
+				ps.setBoolean(1, entity.getBloqueada());
+				ps.setLong(2, entity.getCodigo());
+				ps.executeUpdate();
+				co.close();
+
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Error 1 intentar bloquear/Desbloquear la cuenta");
+			throw new DaoException();
+		}
 
 	}
 
@@ -78,6 +105,7 @@ public class CuentaDao implements Dao<Long, Cuenta> {
 
 			}
 			co.close();
+
 			return cuenta;
 		} catch (SQLException e) {
 			System.out.println("Error creando objeto en BBDD");
@@ -110,55 +138,6 @@ public class CuentaDao implements Dao<Long, Cuenta> {
 		}
 	}
 
-//	public List<Vehiculo> findVehiculosLibres() throws DaoException {
-//		try {
-//			Connection co = getConexion();
-//			Statement instruccion = co.createStatement();
-//
-//			String query = "SELECT * FROM VEHICULO WHERE dni is null";
-//			ResultSet resultados = instruccion.executeQuery(query);
-//
-//			ArrayList<Vehiculo> listado = new ArrayList<Vehiculo>();
-//
-//			while (resultados.next()) {
-//
-//				Vehiculo vehiculo = obtenerVehiculo(resultados);
-//				listado.add(vehiculo);
-//			}
-//
-//			co.close();
-//			return listado;
-//		} catch (SQLException e) {
-//			System.out.println("Error creando objeto en BBDD");
-//			throw new DaoException();
-//		}
-//
-//	}
-//
-//	public List<Vehiculo> findCampo(String campo, String valor) throws DaoException {
-//		try {
-//			Connection co = getConexion();
-//			Statement instruccion = co.createStatement();
-//
-//			String query = "SELECT * FROM VEHICULO WHERE " + campo + "=" + valor;
-//			ResultSet resultados = instruccion.executeQuery(query);
-//
-//			ArrayList<Vehiculo> listado = new ArrayList<Vehiculo>();
-//
-//			while (resultados.next()) {
-//
-//				Vehiculo vehiculo = obtenerVehiculo(resultados);
-//				listado.add(vehiculo);
-//			}
-//
-//			co.close();
-//			return listado;
-//		} catch (SQLException e) {
-//			System.out.println("Error creando objeto en BBDD");
-//			throw new DaoException();
-//		}
-//	}
-
 	protected static Cuenta obtenerCuenta(ResultSet resultado) throws SQLException {
 		Long codigo = resultado.getLong(1);
 		Long saldo = resultado.getLong(2);
@@ -166,11 +145,7 @@ public class CuentaDao implements Dao<Long, Cuenta> {
 		String tipo = resultado.getString(4);
 		String clienteDni = resultado.getString(5);
 		Boolean bloqueada = resultado.getBoolean(6);
-//		Boolean vendido = false;
-//		if (dni != null && !dni.equalsIgnoreCase("")) {
-//			vendido = true;
-//		}
-		Cuenta cuenta = new Cuenta(codigo, saldo, comision, tipo,clienteDni,bloqueada);
+		Cuenta cuenta = new Cuenta(codigo, saldo, comision, tipo, clienteDni, bloqueada);
 		return cuenta;
 	}
 

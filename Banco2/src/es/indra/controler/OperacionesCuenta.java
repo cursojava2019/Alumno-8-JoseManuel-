@@ -1,30 +1,23 @@
 package es.indra.controler;
 
 import java.io.Serializable;
-import java.util.TreeMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import es.indra.model.entities.Cliente;
 import es.indra.model.entities.Cuenta;
-import es.indra.model.entities.CuentaCorriente;
-import es.indra.model.entities.CuentaVivienda;
-import es.indra.model.entities.FondoInversion;
 import es.indra.model.service.ClienteService;
 import es.indra.model.service.CuentaService;
 
 public class OperacionesCuenta implements Serializable {
 	private ClienteService clienteService;
 	private CuentaService cuentaService;
-	private TreeMap<String, Cliente> clientes;
-	private TreeMap<Long, CuentaCorriente> cuentasCorriente;
-	private TreeMap<Long, CuentaVivienda> cuentasVivienda;
-	private TreeMap<Long, FondoInversion> cuentasInversion;
+	private List<Cuenta> cuentas;
 
 	public OperacionesCuenta() {
 		super();
-		this.clientes = new TreeMap<String, Cliente>();
-		this.cuentasCorriente = new TreeMap<Long, CuentaCorriente>();
-		this.cuentasVivienda = new TreeMap<Long, CuentaVivienda>();
-		this.cuentasInversion = new TreeMap<Long, FondoInversion>();
+
+		this.cuentas = new ArrayList<Cuenta>();
 		this.clienteService = new ClienteService();
 		this.cuentaService = new CuentaService();
 	}
@@ -71,24 +64,11 @@ public class OperacionesCuenta implements Serializable {
 	 * su posterior autentificacion.
 	 */
 	public Boolean aniadirCuentaEspecifica(Cuenta c) {
-		String tipo = c.getTipo();
+
 		Boolean correcto = false;
-		if (tipo.equals("corriente")) {
-			CuentaCorriente c2 = new CuentaCorriente(c.getCodigo(), c.getSaldo(), c.getComision(), c.getTipo(),
-					c.getDniCliente(), c.getBloqueada());
-			this.cuentaService.create(c2);
-			correcto = true;
-		}else if (tipo.equals("vivienda")) {
-			CuentaVivienda cv2 = new CuentaVivienda(c.getCodigo(), c.getSaldo(), c.getComision(), c.getTipo(),
-					c.getDniCliente(), c.getBloqueada());
-			this.cuentaService.create(cv2);
-			correcto = true;
-		} else if (tipo.equals("inversion")) {
-			FondoInversion fi2 = new FondoInversion(c.getCodigo(), c.getSaldo(), c.getComision(), c.getTipo(),
-					c.getDniCliente(), c.getBloqueada());
-			this.cuentaService.create(fi2);
-			correcto = true;
-		}
+		this.cuentaService.create(c);
+		correcto = true;
+
 		return correcto;
 	}
 
@@ -97,7 +77,7 @@ public class OperacionesCuenta implements Serializable {
 	 */
 	public Cuenta obtenerCuenta(String dni, Long codigo) {
 		Cuenta c = null;
-		
+
 		if (this.cuentaService.find(codigo) != null && this.cuentaService.find(codigo).getDniCliente().equals(dni)) {
 			c = this.cuentaService.find(codigo);
 
@@ -114,66 +94,48 @@ public class OperacionesCuenta implements Serializable {
 		return c;
 	}
 
-	
-	 /* 
-	  * Funcion sacar dinero cuando la cuenta es corriente
-	  */	  
-	  public void sacarDinero(Cuenta c, Long cantidad) {
-		  if(c.getTipo().equals("corriente")) {	  
-			   c=this.cuentaService.restarSaldoService(c,cantidad);
-			   if(c != null) {
-				   this.cuentaService.update(c);
-			   }else {
-				   System.out.println("Ha habido algun error al ingresar el dinero");
-			   }
-			  
-		  }
-		   
-	  }
-	  public void ingresarDinero(Cuenta c, Long cantidad) {
-		 
-		  if(c.getTipo().equals("corriente")) {	  
-			   c=this.cuentaService.sumarSaldoService(c,cantidad);
-			   if(c != null) {
-				   this.cuentaService.update(c);
-			   }else {
-				   System.out.println("Ha habido algun error al ingresar el dinero");
-			   }
-			  
-		  }
-		   
-	  }
-	 
 	/*
-	 * Funcion sacar dinero cuando la cuenta es un FONDO INVERSION
-	 * 
-	 * public static FondoInversion sacarDineroFI(FondoInversion fi, Long saldo) {
-	 * Long saldoActual = fi.getSaldo(); if (saldoActual < -500) { fi = null; } else
-	 * { fi.setSaldo((saldoActual - saldo)); }
-	 * 
-	 * return fi; }
+	 * Funcion sacar dinero cuando la cuenta es corriente
 	 */
+
+	public void sacarDinero(Cuenta c, Long cantidad) {
+
+		c = this.cuentaService.restarSaldoService(c, cantidad);
+		if (c != null) {
+			this.cuentaService.update(c);
+			this.cuentaService.bloquear(c);
+		}
+
+	}
+
+	public void ingresarDinero(Cuenta c, Long cantidad) {
+
+		if (c.getTipo().equals("corriente")) {
+			c = this.cuentaService.sumarSaldoService(c, cantidad);
+			if (c != null) {
+				this.cuentaService.update(c);
+			} else {
+				System.out.println("Ha habido algun error al ingresar el dinero");
+			}
+
+		}
+
+	}
+
 	/*
 	 * Funcion que fuerza la revision mensual de todas las cuentas. Donde al saldo
 	 * se le aplica la siguiente formula: saldo=saldo*interes_cuenta-comision.
-	 * 
-	 * public void revisionMensualCuentas() { CuentaCorriente cc; CuentaVivienda cv;
-	 * FondoInversion fi; for (Map.Entry<Long, CuentaCorriente> entry :
-	 * this.cuentasCorriente.entrySet()) { cc = entry.getValue(); cc.setSaldo((long)
-	 * (cc.getSaldo() * cc.getInterescc() - cc.getComision())); entry.setValue(cc);
-	 * System.out.println("El saldo de las cuentas se han actualizado");
-	 * System.out.println(entry.getKey() + "/" + entry.getValue()); } for
-	 * (Map.Entry<Long, CuentaVivienda> entry : this.cuentasVivienda.entrySet()) {
-	 * cv = entry.getValue(); cv.setSaldo((long) (cv.getSaldo() *
-	 * cv.getInterescv())); entry.setValue(cv);
-	 * System.out.println("El saldo de las cuentas se han actualizado");
-	 * System.out.println(entry.getKey() + "/" + entry.getValue()); } for
-	 * (Map.Entry<Long, FondoInversion> entry : this.cuentasInversion.entrySet()) {
-	 * fi = entry.getValue(); fi.setSaldo((long) (fi.getSaldo() * fi.getInteresfi()
-	 * - fi.getComision())); entry.setValue(fi);
-	 * System.out.println("El saldo de las cuentas se han actualizado");
-	 * System.out.println(entry.getKey() + "/" + entry.getValue()); }
-	 * 
-	 * }
 	 */
+	public void revisionMensualCuentas() {
+		this.cuentas = this.cuentaService.findAll();
+		this.cuentaService.revisionMensualCuentas(cuentas);
+		if (cuentas != null) {
+			for (int i = 0; i < cuentas.size(); i++) {
+				Cuenta cuenta = new Cuenta();
+				cuenta = cuentas.get(i);
+				this.cuentaService.update(cuenta);
+			}
+		}
+	}
+
 }
