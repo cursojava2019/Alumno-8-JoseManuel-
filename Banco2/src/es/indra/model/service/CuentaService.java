@@ -19,6 +19,18 @@ public class CuentaService extends Service<Long, Cuenta> {
 		return this.dao;
 	}
 
+	public Cuenta sumarSaldoService(Cuenta c, Long cantidad) {
+		Long saldoActual = c.getSaldo();
+		c.setSaldo((saldoActual + cantidad));
+		return c;
+	}
+
+	public Cuenta restarSaldoService(Cuenta c, Long cantidad) {
+		Long saldoActual = c.getSaldo();
+		c.setSaldo((saldoActual - cantidad));
+		return c;
+	}
+
 //	public List<Cuenta> findCuentasBloqueadas() {
 //		try {
 //			getDao();

@@ -43,7 +43,17 @@ public class CuentaDao implements Dao<Long, Cuenta> {
 
 	@Override
 	public void update(Cuenta entity) throws DaoException {
-		// TODO Auto-generated method stub
+		try {
+			Connection co = getConexion();
+			PreparedStatement ps = co.prepareStatement("UPDATE CUENTA SET saldo=? WHERE codigo=?");
+			ps.setLong(1, entity.getSaldo());
+			ps.setLong(2, entity.getCodigo());
+			ps.executeUpdate();
+			co.close();
+		} catch (SQLException e) {
+			System.out.println("Error al ingresar el dinero");
+			throw new DaoException();
+		}	
 
 	}
 

@@ -78,22 +78,17 @@ public class OperacionesCuenta implements Serializable {
 					c.getDniCliente(), c.getBloqueada());
 			this.cuentaService.create(c2);
 			correcto = true;
+		}else if (tipo.equals("vivienda")) {
+			CuentaVivienda cv2 = new CuentaVivienda(c.getCodigo(), c.getSaldo(), c.getComision(), c.getTipo(),
+					c.getDniCliente(), c.getBloqueada());
+			this.cuentaService.create(cv2);
+			correcto = true;
+		} else if (tipo.equals("inversion")) {
+			FondoInversion fi2 = new FondoInversion(c.getCodigo(), c.getSaldo(), c.getComision(), c.getTipo(),
+					c.getDniCliente(), c.getBloqueada());
+			this.cuentaService.create(fi2);
+			correcto = true;
 		}
-//		 else if (tipo.equals("vivienda")) {
-//			CuentaVivienda cv2 = new CuentaVivienda(c.getCodigo(), c.getSaldo(), c.getComision(), c.getTipo(),
-//					c.getCliente(), c.getBloqueada());
-//			String dniCliente = cv2.getCliente().getDni();
-//			this.clientes.put(dniCliente, cv2.getCliente());
-//			this.cuentasVivienda.put(cv2.getCodigo(), cv2);
-//			System.out.println(this.cuentasVivienda.toString());
-//		} else if (tipo.equals("inversion")) {
-//			FondoInversion fi2 = new FondoInversion(c.getCodigo(), c.getSaldo(), c.getComision(), c.getTipo(),
-//					c.getCliente(), c.getBloqueada());
-//			String dniCliente = fi2.getCliente().getDni();
-//			this.clientes.put(dniCliente, fi2.getCliente());
-//			this.cuentasInversion.put(fi2.getCodigo(), fi2);
-//			System.out.println(this.cuentasInversion.toString());
-//		}
 		return correcto;
 	}
 
@@ -102,60 +97,13 @@ public class OperacionesCuenta implements Serializable {
 	 */
 	public Cuenta obtenerCuenta(String dni, Long codigo) {
 		Cuenta c = null;
-		CuentaCorriente cc;
-		CuentaVivienda cv;
-		FondoInversion fi;
+		
 		if (this.cuentaService.find(codigo) != null && this.cuentaService.find(codigo).getDniCliente().equals(dni)) {
 			c = this.cuentaService.find(codigo);
-			if (c.getTipo().equals("corriente")) {
-				cc = (CuentaCorriente) this.cuentaService.find(codigo);
-				this.cuentasCorriente.put(codigo, cc);
-			}
-
-//			if (dni.equals(cc.getCliente().getDni())) {
-//				c = this.cuentasCorriente.get(codigo);
-//			} else {
-//				System.out.println("La cuenta no pertenece a este cliente");
-//			}
 
 		}
-//		 else if (this.cuentasVivienda.get(codigo) != null) {
-//			c = this.cuentasVivienda.get(codigo);
-//			cv = (CuentaVivienda) this.cuentasVivienda.get(codigo);
-//			if (dni.equals(cv.getCliente().getDni())) {
-//				c = this.cuentasVivienda.get(codigo);
-//			} else {
-//				System.out.println("La cuenta no pertenece a este cliente");
-//			}
-//			;
-//		} else if (this.cuentasInversion.get(codigo) != null) {
-//			c = this.cuentasInversion.get(codigo);
-//			fi = (FondoInversion) this.cuentasInversion.get(codigo);
-//			if (dni.equals(fi.getCliente().getDni())) {
-//				c = this.cuentasInversion.get(codigo);
-//			} else {
-//				System.out.println("La cuenta no pertenece a este cliente");
-//			}
-//			;
-//		}
 		return c;
 	};
-
-	/*
-	 * Funcion que actualizar la cuenta para añadir lo que se haya modificado en la
-	 * cuenta
-	 */
-//	public Boolean actualizarCuenta(Long codigo, Cuenta c) {
-//		if (this.cuentasCorriente.get(codigo) != null) {
-//			this.cuentasCorriente.replace(codigo, (CuentaCorriente) c);
-//
-//		} else if (this.cuentasVivienda.get(codigo) != null) {
-//			this.cuentasVivienda.replace(codigo, (CuentaVivienda) c);
-//		} else if (this.cuentasInversion.get(codigo) != null) {
-//			this.cuentasInversion.replace(codigo, (FondoInversion) c);
-//		}
-//		return true;
-//	};
 
 	/*
 	 * Funcion para visualizar el estado de la cuenta
@@ -166,13 +114,36 @@ public class OperacionesCuenta implements Serializable {
 		return c;
 	}
 
-	/*
-	 * Funcion sacar dinero cuando la cuenta es corriente
-	 * 
-	 * public static CuentaCorriente sacarDineroCC(CuentaCorriente cc, Long saldo) {
-	 * Long saldoActual = cc.getSaldo(); if (saldo > saldoActual) { cc = null; }
-	 * else { cc.setSaldo((saldoActual - saldo)); } return cc; }
-	 */
+	
+	 /* 
+	  * Funcion sacar dinero cuando la cuenta es corriente
+	  */	  
+	  public void sacarDinero(Cuenta c, Long cantidad) {
+		  if(c.getTipo().equals("corriente")) {	  
+			   c=this.cuentaService.restarSaldoService(c,cantidad);
+			   if(c != null) {
+				   this.cuentaService.update(c);
+			   }else {
+				   System.out.println("Ha habido algun error al ingresar el dinero");
+			   }
+			  
+		  }
+		   
+	  }
+	  public void ingresarDinero(Cuenta c, Long cantidad) {
+		 
+		  if(c.getTipo().equals("corriente")) {	  
+			   c=this.cuentaService.sumarSaldoService(c,cantidad);
+			   if(c != null) {
+				   this.cuentaService.update(c);
+			   }else {
+				   System.out.println("Ha habido algun error al ingresar el dinero");
+			   }
+			  
+		  }
+		   
+	  }
+	 
 	/*
 	 * Funcion sacar dinero cuando la cuenta es un FONDO INVERSION
 	 * 

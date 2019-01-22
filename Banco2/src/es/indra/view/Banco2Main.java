@@ -117,83 +117,28 @@ public class Banco2Main {
 	 * /////////////////////////////////////////////////////////////////////////////
 	 * Funciones para el menu del Usuario. A este menu se accede una vez que se haya
 	 * validado el cliente
-	 * 
-	 * public static void ingresarDineroMU(String dni, Long codigo, Long saldo) {
-	 * Object c = operaciones.obtenerCuenta(dni, codigo); if (c != null) {
-	 * CuentaCorriente cc = new CuentaCorriente(); CuentaVivienda cv = new
-	 * CuentaVivienda(); FondoInversion fi = new FondoInversion(); if
-	 * (c.getClass().equals(cc.getClass())) { cc = (CuentaCorriente) c;
-	 * cc.setSaldo((cc.getSaldo() + saldo)); operaciones.actualizarCuenta(codigo,
-	 * cc); File file = new File(FICHERO_OPERACIONES); if (!file.exists()) { try {
-	 * file.createNewFile(); } catch (IOException e) {
-	 * System.out.println("Error al crear fichero"); e.printStackTrace(); }
-	 * 
-	 * } FileWriter salida; try { salida = new FileWriter(file, true);
-	 * 
-	 * salida.write(cc.toString()); salida.flush(); salida.close(); } catch
-	 * (Exception e) {
-	 * 
-	 * e.printStackTrace(); } System.out.println("Todo correcto"); } else if
-	 * (c.getClass().equals(cv.getClass())) { cv = (CuentaVivienda) c;
-	 * cv.setSaldo((cv.getSaldo() + saldo)); operaciones.actualizarCuenta(codigo,
-	 * cv); File file = new File(FICHERO_OPERACIONES); if (!file.exists()) { try {
-	 * file.createNewFile(); } catch (IOException e) {
-	 * System.out.println("Error al crear fichero"); e.printStackTrace(); }
-	 * 
-	 * } FileWriter salida; try { salida = new FileWriter(file, true);
-	 * 
-	 * salida.write(cv.toString()); salida.flush(); salida.close(); } catch
-	 * (Exception e) {
-	 * 
-	 * e.printStackTrace(); }
-	 * 
-	 * System.out.println("Todo correcto"); } else if
-	 * (c.getClass().equals(fi.getClass())) { fi = (FondoInversion) c;
-	 * fi.setSaldo((fi.getSaldo() + saldo)); operaciones.actualizarCuenta(codigo,
-	 * fi); File file = new File(FICHERO_OPERACIONES); if (!file.exists()) { try {
-	 * file.createNewFile(); } catch (IOException e) {
-	 * System.out.println("Error al crear fichero"); e.printStackTrace(); }
-	 * 
-	 * } FileWriter salida; try { salida = new FileWriter(file, true);
-	 * 
-	 * salida.write(fi.toString()); salida.flush(); salida.close(); } catch
-	 * (Exception e) {
-	 * 
-	 * e.printStackTrace(); }
-	 * 
-	 * System.out.println("Todo correcto"); } else {
-	 * System.out.println("Algo salio mal."); } } else {
-	 * System.out.println("La cuenta no existe");
-	 * 
-	 * }
-	 * 
-	 * }
-	 * 
-	 * public static void sacarDineroMU(String dni, Long codigo, Long saldo) {
-	 * Object c = operaciones.obtenerCuenta(dni, codigo); if (c != null) {
-	 * CuentaCorriente cc = new CuentaCorriente(); CuentaVivienda cv = new
-	 * CuentaVivienda(); FondoInversion fi = new FondoInversion(); if
-	 * (c.getClass().equals(cc.getClass())) { cc = (CuentaCorriente) c; cc =
-	 * OperacionesCuenta.sacarDineroCC(cc, saldo); if (cc != null) {
-	 * operaciones.actualizarCuenta(codigo, cc);
-	 * System.out.println("Todo correcto"); } else {
-	 * System.out.println("Esta intentando sacar mas dinero del que dispone"); }
-	 * 
-	 * } else if (c.getClass().equals(cv.getClass())) { System.out.
-	 * println("De la cuenta Vivienda no se puede sacar dinero. Lo sentimos"); }
-	 * else if (c.getClass().equals(fi.getClass())) { fi = (FondoInversion) c; if
-	 * (fi.getBloqueada() == false) { fi = OperacionesCuenta.sacarDineroFI(fi,
-	 * saldo); if (fi != null) { operaciones.actualizarCuenta(codigo, fi);
-	 * System.out.println("Todo correcto"); } else { System.out.
-	 * println("Esta intentando sacar mas de 500 euros. La cuenta ha sido bloqueada"
-	 * ); fi.setBloqueada(true); operaciones.actualizarCuenta(codigo, fi); } } else
-	 * { System.out.println("Lo sentimos, su cuenta está bloqueada"); }
-	 * 
-	 * } else { System.out.println("Algo salio mal."); } } else {
-	 * System.out.println("La cuenta no existe");
-	 * 
-	 * } }
-	 */////////////////////////////////////////////////////////////////////////////////////////
+	*/  
+	  public static void ingresarDineroMU(String dni, Long codigo, Long cantidad) {
+		  Cuenta c = operaciones.obtenerCuenta(dni, codigo);
+		  if (c != null) {
+			  operaciones.ingresarDinero(c, cantidad);
+		  } else {
+			  System.out.println("La cuenta no existe");
+		  
+		  }
+		  
+	  }
+	  
+	  public static void sacarDineroMU(String dni, Long codigo, Long cantidad) {
+		  Cuenta c = operaciones.obtenerCuenta(dni, codigo);
+		  if (c != null) {
+			  operaciones.sacarDinero(c, cantidad);
+		  } else {
+			  System.out.println("La cuenta no existe");
+		  
+		  }
+	  }
+	 /////////////////////////////////////////////////////////////////////////////////////////
 
 	public static void estadoCuentaMU(Long codigo) {
 		Cuenta cuenta = operaciones.visualizarCuenta(codigo);
@@ -222,11 +167,11 @@ public class Banco2Main {
 
 				switch (opMenuUsuario) {
 				case 3:
-//					ingresarDineroMU(dni, pedirCodigo(), introducirCantidad());
+					ingresarDineroMU(dni, pedirCodigo(), introducirCantidad());
 
 					break;
 				case 4:
-//					sacarDineroMU(dni, pedirCodigo(), introducirCantidad());
+					sacarDineroMU(dni, pedirCodigo(), introducirCantidad());
 
 					break;
 				case 5:
