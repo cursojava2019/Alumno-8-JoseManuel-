@@ -24,7 +24,9 @@ public abstract class Service<K, O> {
 
 	public void delete(K key) {
 		try {
+			System.out.println("k: "+key);
 			getDao().delete(key);
+			
 		} catch (DaoException e) {
 			System.out.println("Error al eliminar en base de datos ");
 		}

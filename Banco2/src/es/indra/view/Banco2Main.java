@@ -12,8 +12,7 @@ public class Banco2Main {
 	private static Scanner ENTRADA;
 
 	/*
-	 * Funcion que crean, leen y cierra el fichero donde se guardan las operaciones
-	 * del banco
+	 * Funcion que inicializa el objeto operaciones y Scanner
 	 */
 	public static void init() throws ClassNotFoundException, IOException {
 		ENTRADA = new Scanner(System.in);
@@ -28,7 +27,7 @@ public class Banco2Main {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/*
 	 * Funciones donde se le pide al usuario que introduzca el codigo de la cuenta,
-	 * al introducir el dni comprobar que existe y la cantidad que va a ingresar o
+	 * al introducir el dni,comprobar que existe y la cantidad que va a ingresar o
 	 * sacar
 	 *
 	 */
@@ -63,9 +62,10 @@ public class Banco2Main {
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	/*
-	 * Funciones para crear una cuenta generica de tipo Cuenta, crear el cliente y
-	 * despues juntar esa cuenta (especificar el tipo) y añadirle el cliente
+	 * Funciones para crear una cuenta generica de tipo Cuenta y crear el cliente. Despues asociar
+	 * esa cuenta con ese cliente añdiendole a la cuenta el dni del cliente
 	 */
+	
 	public static Cuenta crearCuenta(String dniCliente) {
 		String tipo = null;
 		System.out.println("Vamos a crear la cuenta");
@@ -103,14 +103,12 @@ public class Banco2Main {
 		Cliente cl = new Cliente(dni, nombre, apellido, direccion, tlf);
 		return cl;
 	};
-
 	public static void crearCuentaYCliente() {
 		Cliente cl = crearCliente();
 		operaciones.aniadirCliente(cl);
 		Cuenta c = crearCuenta(cl.getDni());
 		operaciones.aniadirCuentaEspecifica(c);
 	}
-
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	/*
@@ -123,7 +121,10 @@ public class Banco2Main {
 		if (c != null) {
 			operaciones.ingresarDinero(c, cantidad);
 		} else {
-			System.out.println("La cuenta no existe");
+
+			System.out.println("La cuenta no existe o esta bloqueada.Comrpuebelo en la opcion: 5 - Ver estado de"
+					+ "la cuenta");
+
 
 		}
 
@@ -131,25 +132,47 @@ public class Banco2Main {
 
 	public static void sacarDineroMU(String dni, Long codigo, Long cantidad) {
 		Cuenta c = operaciones.obtenerCuenta(dni, codigo);
-		if (c != null) {
+		if (c != null && !c.getBloqueada()) {
 			operaciones.sacarDinero(c, cantidad);
 
 		} else {
-			System.out.println("La cuenta no existe");
+			System.out.println("La cuenta no existe o esta bloqueada.Comrpuebelo en la opcion: 5 - Ver estado de"
+					+ "la cuenta");
 
 		}
 	}
-	/////////////////////////////////////////////////////////////////////////////////////////
 
-	public static void estadoCuentaMU(Long codigo) {
-		Cuenta cuenta = operaciones.visualizarCuenta(codigo);
+	public static void estadoCuentaMU(String dni,Long codigo) {
+		Cuenta cuenta = operaciones.obtenerCuenta(dni,codigo);
 		if (cuenta != null) {
 			System.out.println(cuenta.toString());
 		} else {
-			System.out.println("La cuenta no existe");
+			System.out.println("La cuenta no existe o no es su cuenta.");
 		}
 	}
+	/*
+	 * Funcion para una vez que el cliente ha entrado en su meno (hemos tenido que comprobar 
+	 * primero que esta registrado en la BBDD. Puede crear y borrar una cuneta de su propiedad 
+	 */
+	public static void crearCuentaMU(String dni) {
+		Cuenta cuenta=crearCuenta(dni);
+		operaciones.aniadirCuentaEspecifica(cuenta);
+	};
 
+
+	public static void borrarCuentaMU(String dni, Long codigo) {
+		Cuenta cuenta = operaciones.obtenerCuenta(dni, codigo);
+		if(cuenta != null) {
+			operaciones.borrarCuenta(codigo);
+		}else {
+			System.out.println("La cuenta no existe o no es suya.");
+		}
+		
+	}
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+	/*
+	 *Funcion que aplica la revision mensual a todas las cuentas de todos los clientes
+ 	*/	
 	public static void revisionMensualCuentasMU() {
 		operaciones.revisionMensualCuentas();
 	};
@@ -161,7 +184,9 @@ public class Banco2Main {
 				System.out.println("3- Realizar ingresos en una cuenta");
 				System.out.println("4- Sacar Dinero de una cuenta");
 				System.out.println("5- Ver el estado de la cuenta bancaria");
-				System.out.println("6- Revisión mensual de las cuentas");
+				System.out.println("6- Abrir una nueva cuenta");
+				System.out.println("7- Borrar una cuenta");
+				System.out.println("8- Revisión mensual de las cuentas");
 				System.out.print("1- Finalizar");
 				opMenuUsuario = ENTRADA.nextInt();
 				ENTRADA.nextLine();
@@ -176,11 +201,16 @@ public class Banco2Main {
 
 					break;
 				case 5:
-					estadoCuentaMU(pedirCodigo());
+					estadoCuentaMU(dni,pedirCodigo());
 					break;
 				case 6:
+					crearCuentaMU(dni);
+					break;
+				case 7:
+					borrarCuentaMU(dni,pedirCodigo());
+					break;
+				case 8:
 					revisionMensualCuentasMU();
-
 					break;
 				case 1:
 					System.out.println("Fin del programa");
@@ -195,6 +225,7 @@ public class Banco2Main {
 		}
 
 	}
+
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	public static void main(String[] args) {

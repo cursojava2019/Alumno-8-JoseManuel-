@@ -52,16 +52,23 @@ public class OperacionesCuenta implements Serializable {
 		return existe;
 
 	}
-
+	/*
+	 *Funcion para  añadir un cliente a la BBDD 
+	 */	
 	public void aniadirCliente(Cliente cl) {
 		this.clienteService.create(cl);
 
-	};
-
 	/*
-	 * Funcion para crear la Cuenta segun su tipo.Corriente,vivienda o inversion.
-	 * Aqui añadimos al Treemap de clientes cada cliente que se haya registrado para
-	 * su posterior autentificacion.
+	 *Funcion para borrar una cuenta 
+	 */	
+	};
+	public void borrarCuenta(Long codigo) {
+		this.cuentaService.delete(codigo);
+
+	};
+	
+	/*
+	 * Funcion para crear la Cuenta 
 	 */
 	public Boolean aniadirCuentaEspecifica(Cuenta c) {
 
@@ -73,7 +80,7 @@ public class OperacionesCuenta implements Serializable {
 	}
 
 	/*
-	 * Funcion para Obtener cuenta
+	 * Funcion que devuelve la cuenta que coincida con el dni y el codigo entregado
 	 */
 	public Cuenta obtenerCuenta(String dni, Long codigo) {
 		Cuenta c = null;
@@ -86,16 +93,7 @@ public class OperacionesCuenta implements Serializable {
 	};
 
 	/*
-	 * Funcion para visualizar el estado de la cuenta
-	 */
-	public Cuenta visualizarCuenta(Long codigo) {
-		Cuenta c = null;
-		c = this.cuentaService.find(codigo);
-		return c;
-	}
-
-	/*
-	 * Funcion sacar dinero cuando la cuenta es corriente
+	 * Funcion para meter o  sacar dinero
 	 */
 
 	public void sacarDinero(Cuenta c, Long cantidad) {
@@ -110,17 +108,16 @@ public class OperacionesCuenta implements Serializable {
 
 	public void ingresarDinero(Cuenta c, Long cantidad) {
 
-		if (c.getTipo().equals("corriente")) {
-			c = this.cuentaService.sumarSaldoService(c, cantidad);
+		c = this.cuentaService.sumarSaldoService(c, cantidad);
 			if (c != null) {
 				this.cuentaService.update(c);
 			} else {
 				System.out.println("Ha habido algun error al ingresar el dinero");
 			}
 
-		}
-
 	}
+
+	
 
 	/*
 	 * Funcion que fuerza la revision mensual de todas las cuentas. Donde al saldo

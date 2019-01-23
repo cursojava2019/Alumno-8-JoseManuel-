@@ -57,7 +57,11 @@ public class CuentaDao implements Dao<Long, Cuenta> {
 		}
 
 	}
-
+/*
+ * Funcion que bloquea o desbloquea segun el parametro bloqueada del objeto cuenta 
+ *
+ *
+ */
 	public void bloquear(Cuenta entity) throws DaoException {
 		try {
 			Connection co = getConexion();
@@ -86,10 +90,20 @@ public class CuentaDao implements Dao<Long, Cuenta> {
 
 	@Override
 	public void delete(Long key) throws DaoException {
-		// TODO Auto-generated method stub
+		try {
+			Connection co = getConexion();
+			String query = "DELETE FROM CUENTA WHERE codigo=?";
+			PreparedStatement instruccion = co.prepareStatement(query);
+			instruccion.setLong(1, key);
+			instruccion.executeUpdate();
+			co.close();
+
+		} catch (SQLException e) {
+			System.out.println("Error al borrar objeto en BBDD");
+			throw new DaoException();
+		}
 
 	}
-
 	@Override
 	public Cuenta find(Long key) throws DaoException {
 		Cuenta cuenta = null;
@@ -97,7 +111,6 @@ public class CuentaDao implements Dao<Long, Cuenta> {
 			Connection co = getConexion();
 			String query = "SELECT * FROM CUENTA WHERE codigo=?";
 			PreparedStatement instruccion = co.prepareStatement(query);
-
 			instruccion.setLong(1, key);
 			ResultSet resultados = instruccion.executeQuery();
 			if (resultados.next()) {
@@ -148,5 +161,8 @@ public class CuentaDao implements Dao<Long, Cuenta> {
 		Cuenta cuenta = new Cuenta(codigo, saldo, comision, tipo, clienteDni, bloqueada);
 		return cuenta;
 	}
+
+
+	
 
 }

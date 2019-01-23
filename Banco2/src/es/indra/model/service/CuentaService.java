@@ -27,6 +27,7 @@ public class CuentaService extends Service<Long, Cuenta> {
 	}
 
 	/*
+	 * Condiciones segun el tipo de cuenta que sea:
 	 * La CC tiene un interés del 0.1, la CV del 0.2 y el FI de un 0.34. De la CC no
 	 * se puede sacar mas dinero del que hay, del FI se pueden sacar hasta 500€ de
 	 * números rojos (si se supera la cuenta se bloquea) y de la CV no se puede
@@ -72,7 +73,6 @@ public class CuentaService extends Service<Long, Cuenta> {
 			e.printStackTrace();
 		}
 	}
-
 	public List revisionMensualCuentas(List<Cuenta> cuentas) {
 		for (int i = 0; i < cuentas.size(); i++) {
 			Cuenta c = cuentas.get(i);
@@ -97,5 +97,8 @@ public class CuentaService extends Service<Long, Cuenta> {
 		}
 		return cuentas;
 	}
+
+
+
 
 }
