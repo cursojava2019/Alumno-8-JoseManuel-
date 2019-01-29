@@ -10,6 +10,18 @@
 	}
 	String patronBusqueda= request.getParameter("patron");
 	if (patronBusqueda==null) patronBusqueda="";
+	 String mensaje= request.getParameter("mensaje");
+	 Boolean mensajeOK=false;
+	 Boolean mensajeError=false;
+	 if (mensaje!=null) {
+	 		if (mensaje.equalsIgnoreCase("correcto")) {
+	 			mensajeOK=true;
+	 		}
+	 		if (mensaje.equalsIgnoreCase("errorId")) {
+	 			mensajeError=true;
+	 		}
+	 }
+	
 %>    
     
     
@@ -17,7 +29,6 @@
 <html>
 <%@include file="../plantilla/head.jsp" %>
 <body>
-
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -34,11 +45,17 @@
             <div class="col-lg-12">
             	<div class="panel panel-default">
             	<!-- Mensaje de todo correcto -->
-            	 <%if (request.getParameter("mensaje")!=null){ %>
+            	   <%if (mensajeOK){ %>
                         <div class="alert alert-success" id="mensaje">
                                Operación realizada correctamente
                         </div>
-				<%} %>
+                    <%} %>
+                    <%if (mensajeError){ %>
+                        <div class="alert alert-danger" id="mensaje">
+                               Id no encontrado. No es posible realizar la operación.
+                        </div>
+                    <%} %>
+
             	
                         <div class="panel-heading">
                             Listado de Alumnos
@@ -89,7 +106,14 @@
                                         <td><%=alumno.getApellido1()%> <%=alumno.getApellido2()%></td>
                                         <td><%=alumno.getNif()%></td>
                                         <td ><%=alumno.getTelefono()%></td>
-                                        <td ><a href="<%=alumno.getId()%>">Modificar</a> <a href="<%=alumno.getId()%>">Eliminar</a></td>
+                                        <td >
+                                        	<button class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/admin/alumnos/modificar.html?id=<%=alumno.getId()%>';" type="button">
+                                        	  <b>Modificar</b>	
+                                        	</button>
+                                        	<button class="btn btn-default" onclick="confirmarEliminacion(<%=alumno.getId()%>)" type="button">
+                                         	  <b>Eliminar</b>	
+                                         	</button>
+										</td>
                                     </tr>
                                 <% } %>   
                                 </tbody>
@@ -113,11 +137,12 @@
 
    <%@include file="../plantilla/javascriptPie.jsp" %>
 	 <script>
-    $(document).ready(function() {
+    $(document).ready(function() {	
         $('#dataTables-example').DataTable({
             responsive: true,
             "searching": false
         });
+     
     });
     </script>
 	

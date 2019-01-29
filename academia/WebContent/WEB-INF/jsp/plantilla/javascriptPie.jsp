@@ -21,4 +21,5 @@
     <script src="<%=request.getContextPath() %>/vendor/datatables/js/jquery.dataTables.min.js"></script>
     <script src="<%=request.getContextPath() %>/vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
     <script src="<%=request.getContextPath() %>/vendor/datatables-responsive/dataTables.responsive.js"></script>
-    
+    <!-- JavaScript personalizado -->
+    <script src="<%=request.getContextPath() %>/js/funciones.js"></script>

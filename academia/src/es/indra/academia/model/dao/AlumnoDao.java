@@ -58,9 +58,9 @@ public class AlumnoDao implements Dao<Long, Alumno> {
 		try {
 			// "nombre,apellido1,apellido2,nif,telefono,correo,repetidor,observaciones,id,fechaalta,fechabaja";
 			Connection co = Configuracion.getInstance().obtenerConexionBD();
-			PreparedStatement p = co.prepareStatement("UPDATE ALUMNO" + "SET nombre=?," + "apellido1=?,"
-					+ "apellido2=?," + "nif=?," + "telefono=?," + "correo=?," + "repetidor=?," + "observaciones=?,"
-					+ "fechaalta=?," + "fechabaja=?  WHERE id=?;");
+			PreparedStatement p = co.prepareStatement("UPDATE ALUMNO" + " SET nombre=?," + " apellido1=?,"
+					+ " apellido2=?," + " nif=?," + " telefono=?," + " correo=?," + " repetidor=?," + " observaciones=?,"
+					+ " fechaalta=?," + " fechabaja=? WHERE id=?;");
 
 			p.setString(1, entity.getNombre());
 			p.setString(2, entity.getApellido1());
@@ -70,8 +70,16 @@ public class AlumnoDao implements Dao<Long, Alumno> {
 			p.setString(6, entity.getCorreo());
 			p.setBoolean(7, entity.getRepetidor());
 			p.setString(8, entity.getObservaciones());
-			p.setDate(9, new java.sql.Date(entity.getFechaAlta().getTime()));
-			p.setDate(10, new java.sql.Date(entity.getFechaBaja().getTime()));
+			if (entity.getFechaAlta() != null) {
+				p.setDate(9, new java.sql.Date(entity.getFechaAlta().getTime()));
+			} else {
+				p.setDate(9, null);
+			}
+			if (entity.getFechaBaja() != null) {
+				p.setDate(10, new java.sql.Date(entity.getFechaBaja().getTime()));
+			} else {
+				p.setDate(10, null);
+			}
 			p.setLong(11, entity.getId());
 			p.executeUpdate();
 			co.close();

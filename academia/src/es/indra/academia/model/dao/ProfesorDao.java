@@ -114,7 +114,7 @@ public class ProfesorDao implements Dao<Long, Profesor> {
 			Connection co = Configuracion.getInstance().obtenerConexionBD();
 			Statement instruccion = co.createStatement();
 //			nombre,apellido1,apellido2,nif,telefono,correo,titulacion;
-			String query = "SELECT id," + CAMPOSPROFESOR + "FROM PROFESOR";
+			String query = "SELECT id," + CAMPOSPROFESOR + " FROM PROFESOR;";
 			ResultSet resultados = instruccion.executeQuery(query);
 
 			ArrayList<Profesor> listado = new ArrayList<Profesor>();
@@ -166,25 +166,25 @@ public class ProfesorDao implements Dao<Long, Profesor> {
 
 	private Profesor obtenerProfesor(ResultSet resultado) throws SQLException {
 //String nombre, String apellido1, String apellido2, String nif, String telefono, String correo,String titulacion
-
-		String nombre = resultado.getString(1);
-		System.out.println(nombre);
-		String apellido1 = resultado.getString(2);
-		System.out.println(apellido1);
-		String apellido2 = resultado.getString(3);
-		System.out.println(apellido2);
-		String nif = resultado.getString(4);
-		System.out.println(nif);
-		String telefono = resultado.getString(5);
-		System.out.println(telefono);
-		String correo = resultado.getString(6);
-		System.out.println(correo);
-		String titulacion = resultado.getString(7);
-		System.out.println(titulacion);
-//		Long id = resultado.getLong(8);
+//		System.out.println("Error1");
+		String nombre = resultado.getString(2);
+//		System.out.println(nombre);
+		String apellido1 = resultado.getString(3);
+//		System.out.println(apellido1);
+		String apellido2 = resultado.getString(4);
+//		System.out.println(apellido2);
+		String nif = resultado.getString(5);
+//		System.out.println(nif);
+		String telefono = resultado.getString(6);
+//		System.out.println(telefono);
+		String correo = resultado.getString(7);
+//		System.out.println(correo);
+		String titulacion = resultado.getString(8);
+//		System.out.println(titulacion);
+		Long id = resultado.getLong(1);
 //		System.out.println(id);
 		Profesor profesor = new Profesor(nombre, apellido1, apellido2, nif, telefono, correo, titulacion);
-//		profesor.setId(id);
+		profesor.setId(id);
 		return profesor;
 	}
 

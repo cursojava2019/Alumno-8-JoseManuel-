@@ -7,6 +7,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import es.indra.academia.model.entities.Alumno;
+import es.indra.academia.model.service.AlumnoService;
+
 /**
  * Servlet implementation class EliminarAlumnoServlet
  */
@@ -26,8 +29,26 @@ public class EliminarAlumnoServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		String id = request.getParameter("id");
+		Long idLong = null;
+		AlumnoService alumnoService = AlumnoService.getInstance();
+		try {
+			idLong = Long.parseLong(id);
+		} catch (NumberFormatException e) {
+			idLong = null;
+		}
+		if (idLong == null) {
+			response.sendRedirect("./listado.html?mensaje=errorId");
+		} else {
+			Alumno alumno = alumnoService.find(idLong);
+			if (alumno != null) {
+				alumnoService.delete(idLong);
+				response.sendRedirect("./listado.html?mensaje=correcto");
+			} else {
+				response.sendRedirect("./listado.html?mensaje=errorId");
+			}
+
+		}
 	}
 
 	/**
