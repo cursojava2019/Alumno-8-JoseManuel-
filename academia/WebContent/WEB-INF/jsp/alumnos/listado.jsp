@@ -1,8 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="es.indra.academia.model.entities.Alumno"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+
 <%
 	List<Alumno> listado=(List<Alumno>)request.getAttribute("listado");
 	if (listado==null){

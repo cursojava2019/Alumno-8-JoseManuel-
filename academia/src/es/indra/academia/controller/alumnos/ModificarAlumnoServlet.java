@@ -76,7 +76,7 @@ public class ModificarAlumnoServlet extends HttpServlet {
 			alumnoService.update(alumno);
 
 			response.sendRedirect("./listado.html?mensaje=correcto");
-}
+		}
 	}
 
 }

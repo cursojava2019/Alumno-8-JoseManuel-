@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 
 <%
+String checked ="";
 List<String> errores= (List<String>)request.getAttribute("errores");
 AlumnoForm formulario= (AlumnoForm)request.getAttribute("formulario");
 if (errores==null){
@@ -84,7 +85,12 @@ if (formulario==null){
                                         <div class="form-group">
                                             <div class="checkbox">
                                                 <label>
-                                                    <input name="repetidor" type="checkbox" value="" checked="<%=formulario.getRepetidor()%>"/>Repetidor
+                                                	<%
+                                                		if(formulario.getRepetidor()){
+                                                			 checked="checked";
+                                                		}
+                                                	%>
+                                                    <input name="repetidor" type="checkbox" value="true" <%=checked%>/>Repetidor
                                                 </label>
                                             </div>
                                         </div>

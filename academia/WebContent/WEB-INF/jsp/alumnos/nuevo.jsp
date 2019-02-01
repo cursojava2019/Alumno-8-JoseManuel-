@@ -83,7 +83,7 @@ if (formulario==null){
                                         <div class="form-group">
                                             <div class="checkbox">
                                                 <label>
-                                                    <input name="repetidor" type="checkbox" value="" checked="<%=formulario.getRepetidor()%>"/>Repetidor
+                                                    <input name="repetidor" type="checkbox" value="true"/>Repetidor
                                                 </label>
                                             </div>
                                         </div>

@@ -1,8 +1,8 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="es.indra.academia.model.entities.Profesor"%>
 <%@page import="java.util.List"%>
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+
 <%
 	List<Profesor> listado=(List<Profesor>)request.getAttribute("listado");
 	if (listado==null){
@@ -10,6 +10,18 @@
 	}
 	String patronBusqueda= request.getParameter("patron");
 	if (patronBusqueda==null) patronBusqueda="";
+	 String mensaje= request.getParameter("mensaje");
+	 Boolean mensajeOK=false;
+	 Boolean mensajeError=false;
+	 if (mensaje!=null) {
+	 		if (mensaje.equalsIgnoreCase("correcto")) {
+	 			mensajeOK=true;
+	 		}
+	 		if (mensaje.equalsIgnoreCase("errorId")) {
+	 			mensajeError=true;
+	 		}
+	 }
+	
 %>    
     
     
@@ -17,7 +29,6 @@
 <html>
 <%@include file="../plantilla/head.jsp" %>
 <body>
-
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -34,11 +45,17 @@
             <div class="col-lg-12">
             	<div class="panel panel-default">
             	<!-- Mensaje de todo correcto -->
-            	 <%if (request.getParameter("mensaje")!=null){ %>
+            	   <%if (mensajeOK){ %>
                         <div class="alert alert-success" id="mensaje">
                                Operación realizada correctamente
                         </div>
-				<%} %>
+                    <%} %>
+                    <%if (mensajeError){ %>
+                        <div class="alert alert-danger" id="mensaje">
+                               Id no encontrado. No es posible realizar la operación.
+                        </div>
+                    <%} %>
+
             	
                         <div class="panel-heading">
                             Listado de Profesores
@@ -67,7 +84,7 @@
 		                       </div>
 		                        <%if (!patronBusqueda.equals("")) { %>
 		                                         <span>Busqueda filtrada por <strong><%=patronBusqueda %> </strong></span>
-		                        <%} %>
+		                                    <%} %>
 	                       </div>    
                          </form>
                          <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -90,8 +107,15 @@
                                         <td><%=profesor.getApellido1()%> <%=profesor.getApellido2()%></td>
                                         <td><%=profesor.getNif()%></td>
                                         <td ><%=profesor.getTelefono()%></td>
-                                        <td ><%=profesor.getTitulacion()%></td>
-                                        <td ><a href="<%=profesor.getId()%>">Modificar</a> <a href="<%=profesor.getId()%>">Eliminar</a></td>
+                                         <td ><%=profesor.getTitulacion()%></td>
+                                        <td >
+                                        	<button class="btn btn-default" onclick="location.href='<%=request.getContextPath()%>/admin/profesores/modificar.html?id=<%=profesor.getId()%>';" type="button">
+                                        	  <b>Modificar</b>	
+                                        	</button>
+                                        	<button class="btn btn-default" onclick="eliminacionProfesor(<%=profesor.getId()%>)" type="button">
+                                         	  <b>Eliminar</b>	
+                                         	</button>
+										</td>
                                     </tr>
                                 <% } %>   
                                 </tbody>
@@ -115,7 +139,7 @@
 
    <%@include file="../plantilla/javascriptPie.jsp" %>
 	 <script>
-    $(document).ready(function() {
+    $(document).ready(function() {	
         $('#dataTables-example').DataTable({
             responsive: true,
             "searching": false
