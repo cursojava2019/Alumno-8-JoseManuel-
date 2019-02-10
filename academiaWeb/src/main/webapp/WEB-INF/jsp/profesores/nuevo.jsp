@@ -1,6 +1,7 @@
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page import="java.util.ArrayList"%>
 <%@page import="es.indra.academia.controller.profesores.ProfesorForm"%>
 <%@page import="java.util.List"%>
@@ -31,53 +32,55 @@
                         
                             <div class="row">
                                 <div class="col-lg-6">
-                                	<c:if test="${errores.size() gt 0}">
-		                        	 	<div class="alert alert-danger" id="mensaje">
-				                        	 <c:forEach var="error" items="${errores}">				                        		
-					                            	<p>${error}</p>
-					                         </c:forEach>
-		                        		</div> 
-		 				  			</c:if>                                                              
-                               <form role="form" action="./nuevo.html" method="post">
+                                                                                   
+                               <form:form action="./nuevo.html" method="post" modelAttribute="profesor" >
+                                        <form:hidden path="id" />
                                         <div class="form-group">
                                             <label>NIF</label>
-                                            <input name="nif" class="form-control" value="${formulario.nif}" >
-                                            <p class="help-block"></p>
+                                            <form:input path="nif" class="form-control"/>
+                                            <form:errors path="nif" element="div" cssClass="alert alert-danger"/>
+											<p class="help-block"></p>
                                         </div>
                                         <div class="form-group">
-                                            <label>Nombre</label>
-                                            <input name="nombre" class="form-control" value="${formulario.nombre}" >
-                                            <p class="help-block"></p>
+                                           <label>Nombre</label>
+                                             <form:input path="nombre" class="form-control"/>
+                                             <form:errors path="nombre" element="div" cssClass="alert alert-danger"/>
+											 <p class="help-block"></p>
                                         </div>
                                         <div class="form-group">
-                                            <label>Primer Apellido </label>
-                                            <input name="apellido1" class="form-control" value="${formulario.apellido1}">
-                                            <p class="help-block"></p>
+                                           <label>Primer Apellido </label>
+                                            <form:input path="apellido1" class="form-control"/>
+                                            <form:errors path="apellido1" element="div" cssClass="alert alert-danger"/>
+											<p class="help-block"></p>
                                         </div>
                                         <div class="form-group">
                                             <label>Segundo Apellido</label>
-                                            <input name="apellido2" class="form-control" value="${formulario.apellido2}">
-                                            <p class="help-block"></p>
+                                            <form:input path="apellido2" class="form-control"/>
+                                            <form:errors path="apellido2" element="div" cssClass="alert alert-danger"/>
+											<p class="help-block"></p>
                                         </div>
                                         <div class="form-group">
                                             <label>Telefono</label>
-                                            <input name="telefono" class="form-control" type="text" value="${formulario.telefono}">
-                                            <p class="help-block"></p>
+                                            <form:input path="telefono" class="form-control"/>
+                                            <form:errors path="telefono" element="div" cssClass="alert alert-danger"/>
+											<p class="help-block"></p>
                                         </div>
                                         <div class="form-group">
                                             <label>Correo</label>
-                                            <input name="email" class="form-control" type="email" value="${formulario.correo}">
-                                            <p class="help-block"></p>
+                                            <form:input path="correo" class="form-control"/>
+                                            <form:errors path="correo" element="div" cssClass="alert alert-danger"/>
+											<p class="help-block"></p>
                                         </div>
                                         <div class="form-group">
                                             <label>Titulacion</label>
-                                            <input name="titulacion" class="form-control" value="${formulario.titulacion}">
-                                            <p class="help-block"></p>
+                                            <form:input path="titulacion" class="form-control"/>
+                                            <form:errors path="titulacion" element="div" cssClass="alert alert-danger"/>
+											<p class="help-block"></p>
                                         </div>
                                       
                                         <button type="submit" class="btn btn-default">Enviar</button>
                                         <button type="reset" class="btn btn-default">Limpiar</button>
-                                    </form>
+                                    </form:form>
                                 </div>
                                
                             </div>

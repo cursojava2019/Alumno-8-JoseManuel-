@@ -16,7 +16,6 @@ public class ProfesorService extends Service<Long, Profesor> {
 
 	@Autowired
 	private ProfesorDao dao;
-//	private ProfesorDao dao;
 
 	@Override
 	protected Dao<Long, Profesor> getDao() {
@@ -31,6 +30,15 @@ public class ProfesorService extends Service<Long, Profesor> {
 			return new ArrayList<Profesor>();
 		}
 
+	}
+
+	public List<Profesor> buscarNif(String nif) {
+		try {
+			return this.dao.buscarNif(nif);
+		} catch (DaoException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }

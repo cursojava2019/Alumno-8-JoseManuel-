@@ -31,7 +31,7 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="${ruta}/salir.html"><i class="fa fa-sign-out fa-fw"></i> Salir</a>
+                        <li><a href="${ruta}/logout"><i class="fa fa-sign-out fa-fw"></i> Salir</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 
 import es.indra.academia.model.dao.AlumnoDao;
 import es.indra.academia.model.entities.Alumno;
@@ -21,7 +22,7 @@ public class AlumnoService extends Service<Long, Alumno> {
 	protected Dao<Long, Alumno> getDao() {
 		return this.dao;
 	}
-
+	
 	public List<Alumno> findAlumnosPatron(String patron) {
 		try {
 			return this.dao.findAlumnos(patron);

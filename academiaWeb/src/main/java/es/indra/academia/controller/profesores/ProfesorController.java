@@ -1,4 +1,4 @@
-package es.indra.academia.controller.alumnos;
+package es.indra.academia.controller.profesores;
 
 import java.util.List;
 
@@ -13,53 +13,53 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import es.indra.academia.model.entities.Alumno;
-import es.indra.academia.model.service.AlumnoService;
+import es.indra.academia.model.entities.Profesor;
+import es.indra.academia.model.service.ProfesorService;
 
 @Controller
-@RequestMapping("/admin/alumnos")
-public class AlumnoController {
+@RequestMapping("/admin/profesores")
+public class ProfesorController {
 	@Autowired
-	AlumnoService alumnoService;
+	ProfesorService profesorService;
 
 	@Autowired
-	AlumnoFormValidator validador;
+	ProfesorFormValidator validador;
 
 	@RequestMapping(value = "/listado.html", method = RequestMethod.GET)
 	public String listado(Model model) {
-		List<Alumno> listado = this.alumnoService.findAll();
+		List<Profesor> listado = this.profesorService.findAll();
 		model.addAttribute("listado", listado);
-		return "alumnos/listado";
+		return "profesores/listado";
 	}
 
 	@RequestMapping(value = "/listado.html", method = RequestMethod.POST)
 	public String listadoPatron(@RequestParam("patron") String patron, Model model) {
-		List<Alumno> listado;
+		List<Profesor> listado;
 		if (patron == null || patron.equals("")) {
-			listado = alumnoService.findAll();
+			listado = profesorService.findAll();
 
 		} else {
-			listado = alumnoService.findAlumnosPatron(patron);
+			listado = profesorService.findProfesoresPatron(patron);
 		}
 		model.addAttribute("patron", patron);
 		model.addAttribute("listado", listado);
-		return "alumnos/listado";
+		return "profesores/listado";
 	}
 
 	@RequestMapping(value = "/nuevo.html", method = RequestMethod.GET)
 	public String nuevo(Model model) {
-		model.addAttribute("alumno", new AlumnoForm(new Alumno()));
-		return "alumnos/nuevo";
+		model.addAttribute("profesor", new ProfesorForm(new Profesor()));
+		return "profesores/nuevo";
 	}
 
 	@RequestMapping(value = "/nuevo.html", method = RequestMethod.POST)
-	public String nuevoPost(@Valid @ModelAttribute("alumno") AlumnoForm form, BindingResult result) {
+	public String nuevoPost(@Valid @ModelAttribute("profesor") ProfesorForm form, BindingResult result) {
 		this.validador.validate(form, result);
 		if (result.hasErrors()) {
-			return "alumnos/nuevo";
+			return "profesores/nuevo";
 		} else {
-			this.alumnoService.create(form.obtenerAlumno());
-			return "redirect:/admin/alumnos/listado.html?mensaje=correcto";
+			this.profesorService.create(form.obtenerProfesor());
+			return "redirect:/admin/profesores/listado.html?mensaje=correcto";
 		}
 
 	}
@@ -67,29 +67,29 @@ public class AlumnoController {
 	@RequestMapping(value = "/modificar.html", method = RequestMethod.GET)
 	public String modificar(@RequestParam("id") Long id, Model model) {
 		if (id == null) {
-			return "redirect:/admin/alumnos/listado.html?mensaje=errorId";
+			return "redirect:/admin/profesores/listado.html?mensaje=errorId";
 		} else {
-			Alumno alumno = this.alumnoService.find(id);
-			if (alumno != null) {
-				AlumnoForm form = new AlumnoForm(alumno);
+			Profesor profesor = this.profesorService.find(id);
+			if (profesor != null) {
+				ProfesorForm form = new ProfesorForm(profesor);
 				model.addAttribute("formulario", form);
-				return "alumnos/modificar";
+				return "profesores/modificar";
 			} else {
-				return "redirect:/admin/alumnos/listado.html?mensaje=errorId";
+				return "redirect:/admin/profesores/listado.html?mensaje=errorId";
 			}
 		}
 	}
 
 	@RequestMapping(value = "/modificar.html", method = RequestMethod.POST)
-	public String modificarPost(@Valid @ModelAttribute("formulario") AlumnoForm form, BindingResult result) {
+	public String modificarPost(@Valid @ModelAttribute("formulario") ProfesorForm form, BindingResult result) {
 		this.validador.validate(form, result);
 		if (result.hasErrors()) {
-			return "alumnos/modificar";
+			return "profesores/modificar";
 		} else {
 
-			this.alumnoService.update(form.obtenerAlumno());
+			this.profesorService.update(form.obtenerProfesor());
 
-			return "redirect:/admin/alumnos/listado.html?mensaje=correcto";
+			return "redirect:/admin/profesores/listado.html?mensaje=correcto";
 		}
 
 	}
@@ -98,14 +98,14 @@ public class AlumnoController {
 	public String eliminar(@RequestParam("id") Long id, Model model) {
 
 		if (id == null) {
-			return "redirect:/admin/alumnos/listado.html?mensaje=errorId";
+			return "redirect:/admin/profesores/listado.html?mensaje=errorId";
 		} else {
-			Alumno alumno = this.alumnoService.find(id);
-			if (alumno != null) {
-				this.alumnoService.delete(id);
-				return "redirect:/admin/alumnos/listado.html?mensaje=correcto";
+			Profesor profesor = this.profesorService.find(id);
+			if (profesor != null) {
+				this.profesorService.delete(id);
+				return "redirect:/admin/profesores/listado.html?mensaje=correcto";
 			} else {
-				return "redirect:/admin/alumnos/listado.html?mensaje=errorId";
+				return "redirect:/admin/profesores/listado.html?mensaje=errorId";
 			}
 
 		}

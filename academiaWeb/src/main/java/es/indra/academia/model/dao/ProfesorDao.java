@@ -182,4 +182,28 @@ public class ProfesorDao implements Dao<Long, Profesor> {
 		return profesor;
 	}
 
+	public List<Profesor> buscarNif(String nif) throws DaoException {
+
+		Profesor profesor = null;
+		try {
+			Connection co = Configuracion.getInstance().obtenerConexionBD();
+			String query = "SELECT id," + CAMPOSPROFESOR + " FROM PROFESOR WHERE nif=?";
+			PreparedStatement instruccion = co.prepareStatement(query);
+
+			instruccion.setString(1, nif);
+			ResultSet resultados = instruccion.executeQuery();
+			ArrayList<Profesor> listado = new ArrayList<Profesor>();
+			if (resultados.next()) {
+				profesor = obtenerProfesor(resultados);
+				listado.add(profesor);
+			}
+			co.close();
+			return listado;
+		} catch (SQLException e) {
+			System.out.println("Error creando objeto en BBDD");
+			e.printStackTrace();
+			throw new DaoException();
+		}
+	}
+
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page import="java.util.ArrayList"%>
 <%@page import="es.indra.academia.model.entities.Alumno"%>
 <%@page import="java.util.List"%>
@@ -55,12 +56,12 @@
 	                    </div>
 	                        
                         <!-- /. buscador -->
-                        <form name="buscador" action="./listado.html" method="post">
-	                        <div class="col-6" style="float:right; margin:2px;">
+                        <form name="buscador" action="./listado.html" method="post" >
+                        	<div class="col-6" style="float:right; margin:2px;">
 		                        <div class="col-3">
 		                        		<label>Buscar Alumno
-		                                	<input class="" name="patron" type="text" value="${param.patron}">
-		                                    <span class="">
+		                        		   	<input class="" name="patron" type="text" value="${patron}" />
+		                                	<span class="">
 			                                    <button class="btn btn-default" type="submit">
 			                                    	<i class="fa fa-search"></i>
 			                                    </button>
@@ -68,7 +69,7 @@
 		                                   
 		                               </label>
 		                       </div>
-		                        <c:if test="${not empty param.patron}">
+		                      <c:if test="${not empty param.patron}">
                                   <span>Busqueda filtrada por <strong>${param.patron} </strong></span>                       
 							  </c:if> 
 	                       </div>    

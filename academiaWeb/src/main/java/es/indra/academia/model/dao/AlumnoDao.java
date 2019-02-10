@@ -24,6 +24,7 @@ public class AlumnoDao implements Dao<Long, Alumno> {
 	@Override
 	public void create(Alumno entity) throws DaoException {
 		try {
+			Date fecha = new Date();
 			Connection co = Configuracion.getInstance().obtenerConexionBD();
 			PreparedStatement p = co
 					.prepareStatement("INSERT INTO ALUMNO(" + CAMPOS + ") VALUES (?,?,?,?,?,?,?,?,?,?) ");
@@ -36,11 +37,7 @@ public class AlumnoDao implements Dao<Long, Alumno> {
 			p.setString(6, entity.getCorreo());
 			p.setBoolean(7, entity.getRepetidor());
 			p.setString(8, entity.getObservaciones());
-			if (entity.getFechaAlta() != null) {
-				p.setDate(9, new java.sql.Date(entity.getFechaAlta().getTime()));
-			} else {
-				p.setDate(9, null);
-			}
+			p.setDate(9, new java.sql.Date(fecha.getTime()));
 			if (entity.getFechaBaja() != null) {
 				p.setDate(10, new java.sql.Date(entity.getFechaBaja().getTime()));
 			} else {

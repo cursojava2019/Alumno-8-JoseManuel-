@@ -1,4 +1,4 @@
-package es.indra.academia.controller.alumnos;
+package es.indra.academia.controller.profesores;
 
 import java.util.List;
 
@@ -7,34 +7,33 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
-import es.indra.academia.model.entities.Alumno;
-import es.indra.academia.model.service.AlumnoService;
+import es.indra.academia.model.entities.Profesor;
+import es.indra.academia.model.service.ProfesorService;
 
 @Component
-public class AlumnoFormValidator implements Validator {
+public class ProfesorFormValidator implements Validator {
 
 	@Autowired
-	private AlumnoService alumnoService;
+	private ProfesorService profesorService;
 
 	@Override
 	public boolean supports(Class<?> clazz) {
-		return AlumnoForm.class.equals(clazz);
+		return ProfesorForm.class.equals(clazz);
 	}
 
 	@Override
 	public void validate(Object target, Errors errors) {
-		AlumnoForm form = (AlumnoForm) target;
+		ProfesorForm form = (ProfesorForm) target;
 		if (form.getNif() != null && !form.getNif().equals("")) {
-			List<Alumno> listado = this.alumnoService.buscarNif(form.getNif());
+			List<Profesor> listado = this.profesorService.buscarNif(form.getNif());
 			if (listado != null && !listado.isEmpty()) {
-				Alumno alumno = listado.get(0);
-				if (form.getId() == null || (!alumno.getId().equals(form.getId()))) {
+				Profesor profesor = listado.get(0);
+				if (form.getId() == null || (!profesor.getId().equals(form.getId()))) {
 					errors.rejectValue("nif", "nif.unico");
 				}
 			}
 		}
 
 	}
-
 
 }

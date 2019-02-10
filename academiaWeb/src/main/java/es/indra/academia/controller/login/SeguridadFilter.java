@@ -2,14 +2,12 @@ package es.indra.academia.controller.login;
 
 import java.io.IOException;
 
-import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,7 +15,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet Filter implementation class SeguridadFilter
  */
-@WebFilter(dispatcherTypes = { DispatcherType.REQUEST }, urlPatterns = { "/admin/*" })
+//@WebFilter(dispatcherTypes = { DispatcherType.REQUEST }, urlPatterns = { "/admin/*" })
 public class SeguridadFilter implements Filter {
 
 	/**
@@ -46,7 +44,7 @@ public class SeguridadFilter implements Filter {
 		if (identificador != null && identificador.equals("si")) {
 			chain.doFilter(request, response);
 		} else {
-			respuesta.sendRedirect(peticion.getContextPath() + "/index.jsp");
+			respuesta.sendRedirect(peticion.getContextPath() + "/inadex.jsp");
 
 		}
 	}
