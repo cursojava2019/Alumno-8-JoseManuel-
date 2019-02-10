@@ -33,7 +33,7 @@ public class SalirServlet extends HttpServlet {
 			throws ServletException, IOException {
 		HttpSession sesion = request.getSession(true);
 		sesion.setAttribute("identificado", null);
-		response.sendRedirect(request.getContextPath() + "/index.html");
+		response.sendRedirect(request.getContextPath() + "/index.jsp");
 	}
 
 	/**
