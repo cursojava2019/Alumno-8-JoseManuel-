@@ -1,0 +1,11 @@
+INSERT INTO responsable_alumno (nombre,apellido1,apellido2,nif,telefono,correo)
+VALUES ('resp1','resp1ape1','resp1ape2','75483001R','958199001','resp1@gmail.com'); 
+
+<td>
+                              	<c:if test="${empty alumno.responsableAlumno}">
+	                                            	<b>Sin asignar</b>             
+								  				</c:if>
+		                                       	<c:if test="${not empty alumno.responsableAlumno}">
+	                                            	<b>${alumno.responsableAlumno.nombre} ${alumno.responsableAlumno.apellido1} ${alumno.responsableAlumno.apellido2}</b>             
+								  				</c:if>
+	                                       	</td>
